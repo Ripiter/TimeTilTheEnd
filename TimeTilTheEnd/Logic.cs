@@ -178,7 +178,7 @@ namespace TimeTilTheEnd
                 default:
                     Suffering = false;
                     break;        
-            }
+            } 
             return timeLeft;
         }
 
