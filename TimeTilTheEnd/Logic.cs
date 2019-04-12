@@ -11,6 +11,7 @@ namespace TimeTilTheEnd
 {
     class Logic
     {
+        Holiday ac = new Holiday();
         string timeLeft = "16:00:00";
         bool eating = false;
         private bool suffering = true;
@@ -122,7 +123,10 @@ namespace TimeTilTheEnd
                     if (eating == true)
                         Console.WriteLine("Break!!! Eat!!! Now!!!");
                     Console.WriteLine("Days Survived: " + PrintDaysSurvived);
-                    Thread.Sleep(1000);
+                    TripleAAA();
+                    HeadQuarters();
+                    
+                    Thread.Sleep(980);
                     if (g.Seconds <= -1)
                     {
                         WeAreWorking();
@@ -150,9 +154,9 @@ namespace TimeTilTheEnd
         }
 
 
+            DayOfWeek today = DateTime.Today.DayOfWeek;
         string DayOfTheWeek()
         {
-            DayOfWeek today = DateTime.Today.DayOfWeek;
             switch (today)
             {
                 case DayOfWeek.Monday:
@@ -194,7 +198,66 @@ namespace TimeTilTheEnd
 
             if (doneEating < DateTime.Now)
                 eating = false;
-        }
+        }        
         
+        Random rnd = new Random();
+        void TripleAAA()
+        {
+            DateTime[] paskeFerie = ac.Holidaay(2019, 4, 15, 2019, 4, 23);
+            DateTime[] sommerFerie = ac.Holidaay(2019, 6, 29, 2019, 7, 11);
+
+            int gg = rnd.Next(1, 3);
+
+            switch (gg) {
+                case 1:
+                  HolidayCounter(paskeFerie,"paskeferie");
+                    break;
+                case 2:
+                  HolidayCounter(sommerFerie,"sommerferie");
+                    break;
+                default:
+                    Console.WriteLine("Yeet the error");
+                    break;
+            }
+
+        }
+        void HeadQuarters()
+        {
+            DateTime[] headTwo = ac.Holidaay(2020, 1, 13, 2020, 3, 20);
+
+            HeadCounter(headTwo,"head2");
+        }
+        void HeadCounter(DateTime[] b, string nameOfHead)
+        {
+            TimeSpan c = b[0] - DateTime.Now;
+            TimeSpan d = b[1] - DateTime.Now;
+            TimeSpan e = DateTime.Now - b[1];
+
+            if (DateTime.Now <= b[0])
+                Console.WriteLine("Days till " +nameOfHead +": "+ c.Days);
+            else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
+                Console.WriteLine(nameOfHead + " now days left: " + d.Days);
+
+            else if (DateTime.Now >= b[1])
+                Console.WriteLine("Days since " + nameOfHead + ": " + e.Days);
+
+        }
+        void HolidayCounter(DateTime[] b, string nameOfHoliday)
+        {
+            
+            TimeSpan c = b[0] - DateTime.Now;
+            TimeSpan d = b[1] - DateTime.Now;
+            TimeSpan e = DateTime.Now - b[1];
+
+            if (DateTime.Now <= b[0])
+                Console.WriteLine("Days till " +nameOfHoliday +": "+ c.Days);
+
+            else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
+                Console.WriteLine(nameOfHoliday +" now days left: " + d.Days);
+
+            else if (DateTime.Now >= b[1])
+                Console.WriteLine("Days since " +nameOfHoliday +": "+ e.Days);
+        }
+
     }
 }

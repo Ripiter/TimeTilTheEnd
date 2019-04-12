@@ -10,17 +10,21 @@ using Microsoft.Win32;
 
 namespace TimeTilTheEnd
 {
-    class Program
+    class Program : Holiday
     {
         static void Main(string[] args)
         {
             Logic a = new Logic();
+
+
             a.FirstWrite();
             while (true)
             {
                 Console.Clear();
                 a.NormalTimer();
+               
             }
+
         }
     }
 }
