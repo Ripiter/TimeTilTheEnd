@@ -16,7 +16,6 @@ namespace TimeTilTheEnd
         {
             Logic a = new Logic();
 
-
             a.FirstWrite();
             while (true)
             {

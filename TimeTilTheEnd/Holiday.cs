@@ -9,6 +9,16 @@ namespace TimeTilTheEnd
 {
     class Holiday
     {
+        /// <summary>
+        /// create 2 dates
+        /// </summary>
+        /// <param name="startyear"></param>
+        /// <param name="startmonth"></param>
+        /// <param name="startday"></param>
+        /// <param name="endyear"></param>
+        /// <param name="endmonth"></param>
+        /// <param name="endday"></param>
+        /// <returns></returns>
         public DateTime[] Holidaay(int startyear, int startmonth, int startday, int endyear, int endmonth, int endday)
         {
             DateTime startdate = new DateTime(startyear, startmonth, startday);
