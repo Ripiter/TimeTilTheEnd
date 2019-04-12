@@ -50,7 +50,7 @@ namespace TimeTilTheEnd
                 this.suffering = value;
             }
         }
-
+         
         public void FirstWrite()
         {
             string fileName = @"C:\daysSurvived.txt";
