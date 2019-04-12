@@ -65,7 +65,6 @@ namespace TimeTilTheEnd
                        sw.WriteLine(0);
                     }    
                 }
-               
             }
             catch (Exception)
             {
@@ -94,12 +93,11 @@ namespace TimeTilTheEnd
             }
         }
 
-
         public void NormalTimer()
         {
+            //Check what day is it
             DayOfTheWeek();
             DateTime a = DateTime.Parse(timeLeft);
-
             //DateTime a = DateTime.Parse("16:00:00");
 
             TimeSpan g;
@@ -120,8 +118,8 @@ namespace TimeTilTheEnd
                     if (eating == true)
                         Console.WriteLine("Break!!! Eat!!! Now!!!");
                     Console.WriteLine("Days Survived: " + PrintDaysSurvived);
-                    HolidayFinder();
-                    HeadQuarters();
+                    HolidayFinder(); //Prints day left to holiday
+                    HeadQuarters(); //Prints day left to hovedforlob
                     
                     Thread.Sleep(980);
                     if (g.Seconds <= -1)
@@ -178,8 +176,11 @@ namespace TimeTilTheEnd
                     break;
                 default:
                     Suffering = false;
-                    break;        
-            } 
+                    break;
+                    //Find Better Way later
+
+            }
+            HolidayFinder();
             return timeLeft;
         }
 
@@ -249,9 +250,13 @@ namespace TimeTilTheEnd
             TimeSpan e = DateTime.Now - b[1];
 
             if (DateTime.Now <= b[0])
-                Console.WriteLine("Days till " +nameOfHead +": "+ c.Days);
+                Console.WriteLine("Days till " + nameOfHead + ": " + c.Days);
+
             else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
+            {
                 Console.WriteLine(nameOfHead + " now days left: " + d.Days);
+                Suffering = false;
+            }
 
             else if (DateTime.Now >= b[1])
                 Console.WriteLine("Days since " + nameOfHead + ": " + e.Days);
@@ -266,13 +271,15 @@ namespace TimeTilTheEnd
             TimeSpan e = DateTime.Now - b[1];
 
             if (DateTime.Now <= b[0])
-                Console.WriteLine("Days till " +nameOfHoliday +": "+ c.Days);
+                Console.WriteLine("Days till " + nameOfHoliday + ": " + c.Days);
 
             else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-                Console.WriteLine(nameOfHoliday +" now days left: " + d.Days);
-
+            {
+                Console.WriteLine(nameOfHoliday + " now days left: " + d.Days);
+                Suffering = false;
+            }
             else if (DateTime.Now >= b[1])
-                Console.WriteLine("Days since " +nameOfHoliday +": "+ e.Days);
+                Console.WriteLine("Days since " + nameOfHoliday + ": " + e.Days);
         }
         #endregion
 
