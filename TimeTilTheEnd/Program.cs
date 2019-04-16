@@ -19,11 +19,16 @@ namespace TimeTilTheEnd
             a.FirstWrite();
             while (true)
             {
-                Console.Clear();
-                a.NormalTimer();
-               
+                //string printF = a.NormalTimer();
+                //a.NormalTimer();
+                PrintF(a.NormalTimer());
             }
 
+        }
+        static void PrintF(string f)
+        {
+            Console.WriteLine(f);
+            //return f;
         }
     }
 }

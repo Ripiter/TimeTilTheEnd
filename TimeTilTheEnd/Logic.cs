@@ -93,8 +93,9 @@ namespace TimeTilTheEnd
             }
         }
 
-        public void NormalTimer()
+        public string NormalTimer()
         {
+            string returnString = "";
             //Check what day is it
             DayOfTheWeek();
             DateTime a = DateTime.Parse(timeLeft);
@@ -106,39 +107,44 @@ namespace TimeTilTheEnd
             {
                 while (Suffering)
                 {
+                    Thread.Sleep(975);
+                    Console.Clear();
                     EatingTime();
                     ReadingFromTxt();
-                    Console.Clear();
                     g = a - DateTime.Now;
-                    Console.Write(g);
-                    Console.WriteLine("");
-                    Console.WriteLine("Hours left: " + g.Hours);
-                    Console.WriteLine("Minutes left: " + g.Minutes);
-                    Console.WriteLine("Seconds left: " + g.Seconds);
+                    returnString = g + "\n\rHours left: " +g.Hours +"\n\rMinuts left: " + g.Minutes +"\n\rSeconds left: " +g.Seconds+"\n\rDays Survived: "+PrintDaysSurvived+"\r";
+                    //Console.Write(g);
+                    //Console.WriteLine("");
+                    //Console.WriteLine("Hours left: " + g.Hours);
+                    //Console.WriteLine("Minutes left: " + g.Minutes);
+                    //Console.WriteLine("Seconds left: " + g.Seconds);
                     if (eating == true)
-                        Console.WriteLine("Break!!! Eat!!! Now!!!");
-                    Console.WriteLine("Days Survived: " + PrintDaysSurvived);
+                        returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
+                    //    Console.WriteLine("Break!!! Eat!!! Now!!!");
+                   // Console.WriteLine("Days Survived: " + PrintDaysSurvived);
                     HolidayFinder(); //Prints day left to holiday
                     HeadQuarters(); //Prints day left to hovedforlob
                     
-                    Thread.Sleep(980);
                     if (g.Seconds <= -1)
                     {
                         WeAreWorking();
                         TheEndOfTime();
                     }
+                    return returnString;
                 }
+                return null;
             }
             else
             {
-                Console.WriteLine("Home");
+                //Console.WriteLine("Home");
                 Thread.Sleep(60000);
+                return "Home";
             }
         }
 
+
         void TheEndOfTime()
         {
-            Console.WriteLine("Time has ended");
             Suffering = false;
         }
         void WeAreWorking()
@@ -180,7 +186,7 @@ namespace TimeTilTheEnd
                     //Find Better Way later
 
             }
-            HolidayFinder();
+            //HolidayFinder();
             return timeLeft;
         }
 
@@ -253,10 +259,7 @@ namespace TimeTilTheEnd
                 Console.WriteLine("Days till " + nameOfHead + ": " + c.Days);
 
             else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-            {
                 Console.WriteLine(nameOfHead + " now days left: " + d.Days);
-                Suffering = false;
-            }
 
             else if (DateTime.Now >= b[1])
                 Console.WriteLine("Days since " + nameOfHead + ": " + e.Days);
@@ -274,10 +277,8 @@ namespace TimeTilTheEnd
                 Console.WriteLine("Days till " + nameOfHoliday + ": " + c.Days);
 
             else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-            {
                 Console.WriteLine(nameOfHoliday + " now days left: " + d.Days);
-                Suffering = false;
-            }
+
             else if (DateTime.Now >= b[1])
                 Console.WriteLine("Days since " + nameOfHoliday + ": " + e.Days);
         }
