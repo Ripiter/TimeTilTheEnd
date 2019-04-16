@@ -30,5 +30,9 @@ namespace TimeTilTheEnd
             Console.WriteLine(f);
             //return f;
         }
+        static void HolidayPrint(string f)
+        {
+            Console.WriteLine(f);
+        }
     }
 }
