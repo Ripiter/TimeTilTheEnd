@@ -21,18 +21,11 @@ namespace TimeTilTheEnd
             {
                 //string printF = a.NormalTimer();
                 //a.NormalTimer();
-                PrintF(a.NormalTimer());
+                //PrintF(a.NormalTimer());
+                Console.WriteLine(a.NormalTimer());
+                Console.WriteLine(a.HeadQuarters());
+                Console.WriteLine(a.HolidayFinder());
             }
-
-        }
-        static void PrintF(string f)
-        {
-            Console.WriteLine(f);
-            //return f;
-        }
-        static void HolidayPrint(string f)
-        {
-            Console.WriteLine(f);
         }
     }
 }

@@ -209,8 +209,9 @@ namespace TimeTilTheEnd
         /// and time from the last holiday
         /// </summary>
         Random rnd = new Random();
-        void HolidayFinder() 
+        public string HolidayFinder() 
         {
+            string holidayFound = "";
             //ac is holiday method that returns datetime[] with datetime;
             //first 3 numbers are made into 1 datetime and rest is made to check when it ends
             DateTime[] paskeFerie = hoe.Holidaay(2019, 4, 15, 2019, 4, 23);
@@ -220,25 +221,27 @@ namespace TimeTilTheEnd
 
             switch (gg) {
                 case 1:
-                  HolidayCounter(paskeFerie,"Easter Holiday");
+                  holidayFound = HolidayCounter(paskeFerie,"Easter Holiday");
                     break;
                 case 2:
-                  HolidayCounter(sommerFerie,"Summer Holiday");
+                  holidayFound = HolidayCounter(sommerFerie,"Summer Holiday");
                     break;
                 default:
                     Console.WriteLine("Yeet the error");
                     break;
             }
+            return holidayFound;
         }
         /// <summary>
         /// HeadQuartes are for the days that we are in ringsted
         /// from hovedforlob 2 to hovedforlob 5
         /// </summary>
-        void HeadQuarters()
+        public string HeadQuarters()
         {
             DateTime[] headTwo = hoe.Holidaay(2020, 1, 13, 2020, 3, 20);
 
-            HeadCounter(headTwo,"head2");
+            string a = HeadCounter(headTwo,"head2");
+            return a;
         }
         /// <summary>
         /// DateTime[] is the start date of the x,y and string nameOfHead is for the name of the thing
@@ -247,8 +250,9 @@ namespace TimeTilTheEnd
         /// <param name="b"></param>
         /// <param name="nameOfHead"></param>
         #region HeadCounter, HolidayCounter
-        void HeadCounter(DateTime[] b, string nameOfHead)
+        string HeadCounter(DateTime[] b, string nameOfHead)
         {
+            string daysPrint = "";
             //b[0] is day the event starts
             //b[1] is day the event ends
             TimeSpan c = b[0] - DateTime.Now;
@@ -256,17 +260,22 @@ namespace TimeTilTheEnd
             TimeSpan e = DateTime.Now - b[1];
 
             if (DateTime.Now <= b[0])
-                Console.WriteLine("Days till " + nameOfHead + ": " + c.Days);
+                daysPrint = "Days till " + nameOfHead + ": " + c.Days;
+            //Console.WriteLine("Days till " + nameOfHead + ": " + c.Days);
 
             else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-                Console.WriteLine(nameOfHead + " now days left: " + d.Days);
+                daysPrint = nameOfHead + " now days left: " + d.Days;
+            //Console.WriteLine(nameOfHead + " now days left: " + d.Days);
 
             else if (DateTime.Now >= b[1])
-                Console.WriteLine("Days since " + nameOfHead + ": " + e.Days);
+                daysPrint = "Days since " + nameOfHead + ": " + e.Days;
+                //Console.WriteLine("Days since " + nameOfHead + ": " + e.Days);
 
+            return daysPrint;
         }
-        void HolidayCounter(DateTime[] b, string nameOfHoliday)
+        string HolidayCounter(DateTime[] b, string nameOfHoliday)
         {
+            string holidayCounter = "";
             //b[0] is day the event starts
             //b[1] is day the event ends
             TimeSpan c = b[0] - DateTime.Now;
@@ -274,13 +283,15 @@ namespace TimeTilTheEnd
             TimeSpan e = DateTime.Now - b[1];
 
             if (DateTime.Now <= b[0])
-                Console.WriteLine("Days till " + nameOfHoliday + ": " + c.Days);
+                holidayCounter = "Days till " + nameOfHoliday + ": " + c.Days;
 
             else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-                Console.WriteLine(nameOfHoliday + " now days left: " + d.Days);
+                holidayCounter = nameOfHoliday + " now days left: " + d.Days;
 
             else if (DateTime.Now >= b[1])
-                Console.WriteLine("Days since " + nameOfHoliday + ": " + e.Days);
+                holidayCounter = "Days since " + nameOfHoliday + ": " + e.Days;
+
+            return holidayCounter;
         }
         #endregion
 
