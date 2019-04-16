@@ -209,7 +209,7 @@ namespace TimeTilTheEnd
         /// and time from the last holiday
         /// </summary>
         Random rnd = new Random();
-        void HolidayFinder()
+        void HolidayFinder() 
         {
             //ac is holiday method that returns datetime[] with datetime;
             //first 3 numbers are made into 1 datetime and rest is made to check when it ends
