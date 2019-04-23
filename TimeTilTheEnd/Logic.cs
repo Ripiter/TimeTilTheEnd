@@ -106,12 +106,11 @@ namespace TimeTilTheEnd
                     EatingTime();
                     ReadingFromTxt();
                     g = a - DateTime.Now;
-                    returnString = g + "\n\rHours left: " +g.Hours +"\n\rMinuts left: " + g.Minutes +"\n\rSeconds left: " +g.Seconds+"\n\rDays Survived: "+PrintDaysSurvived+"\r";
-                    //Console.Write(g);
-                    //Console.WriteLine("");
-                    //Console.WriteLine("Hours left: " + g.Hours);
-                    //Console.WriteLine("Minutes left: " + g.Minutes);
-                    //Console.WriteLine("Seconds left: " + g.Seconds);
+                    returnString = g + "\n\r" +
+                                   "Hours left: " +g.Hours +"\n\r" +
+                                   "Minuts left: " + g.Minutes +"\n\r" +
+                                   "Seconds left: " +g.Seconds+"\n\r" +
+                                   "Days Survived: "+PrintDaysSurvived+"\r";
                     if (eating == true)
                         returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
                     HolidayFinder(); //Prints day left to holiday
