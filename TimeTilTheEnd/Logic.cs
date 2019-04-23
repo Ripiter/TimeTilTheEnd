@@ -12,7 +12,7 @@ namespace TimeTilTheEnd
     class Logic
     {
         Holiday hoe = new Holiday();
-        string timeLeft = "16:00:00";
+        string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
         int daysSurvived;
@@ -74,6 +74,7 @@ namespace TimeTilTheEnd
             write.Write(DaysSurvived);
             write.Close();
         }
+
         void ReadingFromTxt()
         {
             using (StreamReader read = new StreamReader("C:/daysSurvived.txt"))
@@ -91,8 +92,9 @@ namespace TimeTilTheEnd
             string returnString = "";
             //Check what day is it
             DayOfTheWeek();
+
+            //timeLeft is time we got free
             DateTime a = DateTime.Parse(timeLeft);
-            //DateTime a = DateTime.Parse("16:00:00");
 
             TimeSpan g;
             TimeSpan minusTime = a - DateTime.Now;
@@ -112,8 +114,6 @@ namespace TimeTilTheEnd
                     //Console.WriteLine("Seconds left: " + g.Seconds);
                     if (eating == true)
                         returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
-                    //    Console.WriteLine("Break!!! Eat!!! Now!!!");
-                   // Console.WriteLine("Days Survived: " + PrintDaysSurvived);
                     HolidayFinder(); //Prints day left to holiday
                     HeadQuarters(); //Prints day left to hovedforlob
                     
@@ -134,18 +134,17 @@ namespace TimeTilTheEnd
             }
         }
 
-
         void TheEndOfTime()
         {
             Suffering = false;
         }
+
         void WeAreWorking()
         {
             DaysSurvived = PrintDaysSurvived;
             DaysSurvived++;
             WritingToTxt();
         }
-
 
         DayOfWeek today = DateTime.Today.DayOfWeek;
         string DayOfTheWeek()
@@ -175,13 +174,13 @@ namespace TimeTilTheEnd
                 default:
                     Suffering = false;
                     break;
-                    //Find Better Way later
-
             }
-            //HolidayFinder();
             return timeLeft;
         }
 
+        /// <summary>
+        /// When we got break, message will apear
+        /// </summary>
         void EatingTime()
         {
             DateTime launchTime = DateTime.Parse("11:00:00");
@@ -197,8 +196,7 @@ namespace TimeTilTheEnd
         }        
         
         /// <summary>
-        /// Every holiday goes here, where it send it further to calculate the amount of days til next holiday
-        /// and time from the last holiday
+        /// Changes the holiday everyday second
         /// </summary>
         int gg;
         public int ChangeHoliday(int threadNumber)
@@ -207,10 +205,14 @@ namespace TimeTilTheEnd
 
             return gg;
         }
+        /// <summary>
+        /// Every holiday goes here, where it send it further to calculate the amount of days til next holiday
+        /// and time from the last holiday
+        /// </summary>
         public string HolidayFinder() 
         {
             string holidayFound = "";
-            //ac is holiday method that returns datetime[] with datetime;
+            //hoe is holiday method that returns datetime[] with datetime;
             //first 3 numbers are made into 1 datetime and rest is made to check when it ends
             DateTime[] paskeFerie = hoe.Holidaay(2019, 4, 15, 2019, 4, 23);
             DateTime[] sommerFerie = hoe.Holidaay(2019, 6, 29, 2019, 7, 11);

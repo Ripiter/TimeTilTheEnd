@@ -18,11 +18,11 @@ namespace TimeTilTheEnd
             int dayChange = 1;
             while (true)
             {
+                a.ChangeHoliday(dayChange);         //Changes holiday
                 Console.WriteLine(a.NormalTimer());     //Writes time til school end
                 Console.WriteLine(a.HeadQuarters());    //Writes time til hovedforlob 
                 Console.WriteLine(a.HolidayFinder());   //Writes time til holiday
                 Thread.Sleep(1000);
-                    a.ChangeHoliday(dayChange);         //Changes holiday
                         dayChange++;
 
               if (dayChange == 3)
@@ -43,7 +43,6 @@ namespace TimeTilTheEnd
                 Console.WriteLine("File Not Created");
             }
             #endregion
-
 
             sleepingThread.Start();
         }
