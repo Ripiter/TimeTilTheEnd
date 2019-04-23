@@ -22,7 +22,7 @@ namespace TimeTilTheEnd
                 Console.WriteLine(a.HeadQuarters());    //Writes time til hovedforlob 
                 Console.WriteLine(a.HolidayFinder());   //Writes time til holiday
                 Thread.Sleep(1000);
-                    a.ChangeHoliday(dayChange);
+                    a.ChangeHoliday(dayChange);         //Changes holiday
                         dayChange++;
 
               if (dayChange == 3)

@@ -200,7 +200,6 @@ namespace TimeTilTheEnd
         /// Every holiday goes here, where it send it further to calculate the amount of days til next holiday
         /// and time from the last holiday
         /// </summary>
-        Random rnd = new Random();
         int gg;
         public int ChangeHoliday(int threadNumber)
         {
@@ -244,49 +243,46 @@ namespace TimeTilTheEnd
         /// DateTime[] is the start date of the x,y and string nameOfHead is for the name of the thing
         /// HeadCounter is made to calculate and print the amount of days to x,y event
         /// </summary>
-        /// <param name="b"></param>
+        /// <param name="dayIndex"></param>
         /// <param name="nameOfHead"></param>
         #region HeadCounter, HolidayCounter
-        string HeadCounter(DateTime[] b, string nameOfHead)
+        string HeadCounter(DateTime[] dayIndex, string nameOfHead)
         {
             string daysPrint = "";
-            //b[0] is day the event starts
-            //b[1] is day the event ends
-            TimeSpan c = b[0] - DateTime.Now;
-            TimeSpan d = b[1] - DateTime.Now;
-            TimeSpan e = DateTime.Now - b[1];
+            //dayIndex[0] is day the event starts
+            //dayIndex[1] is day the event ends
+            TimeSpan tilHovedforlob = dayIndex[0] - DateTime.Now;
+            TimeSpan whileHovedforlob = dayIndex[1] - DateTime.Now;
+            TimeSpan sinceHovedforlob = DateTime.Now - dayIndex[1];
 
-            if (DateTime.Now <= b[0])
-                daysPrint = "Days till " + nameOfHead + ": " + c.Days;
-            //Console.WriteLine("Days till " + nameOfHead + ": " + c.Days);
+            if (DateTime.Now <= dayIndex[0])
+                daysPrint = "Days till " + nameOfHead + ": " + tilHovedforlob.Days;
 
-            else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-                daysPrint = nameOfHead + " now days left: " + d.Days;
-            //Console.WriteLine(nameOfHead + " now days left: " + d.Days);
+            else if (DateTime.Now >= dayIndex[0] && DateTime.Now <= dayIndex[1])
+                daysPrint = nameOfHead + " now days left: " + whileHovedforlob.Days;
 
-            else if (DateTime.Now >= b[1])
-                daysPrint = "Days since " + nameOfHead + ": " + e.Days;
-                //Console.WriteLine("Days since " + nameOfHead + ": " + e.Days);
+            else if (DateTime.Now >= dayIndex[1])
+                daysPrint = "Days since " + nameOfHead + ": " + sinceHovedforlob.Days;
 
             return daysPrint;
         }
-        string HolidayCounter(DateTime[] b, string nameOfHoliday)
+        string HolidayCounter(DateTime[] dayIndex, string nameOfHoliday)
         {
             string holidayCounter = "";
-            //b[0] is day the event starts
-            //b[1] is day the event ends
-            TimeSpan c = b[0] - DateTime.Now;
-            TimeSpan d = b[1] - DateTime.Now;
-            TimeSpan e = DateTime.Now - b[1];
+            //dayIndex[0] is day the event starts
+            //dayIndex[1] is day the event ends
+            TimeSpan timeSpanTilHoliday = dayIndex[0] - DateTime.Now;
+            TimeSpan timeSpanWhileHoliday = dayIndex[1] - DateTime.Now;
+            TimeSpan timeSpanPastHoliday = DateTime.Now - dayIndex[1];
 
-            if (DateTime.Now <= b[0])
-                holidayCounter = "Days till " + nameOfHoliday + ": " + c.Days;
+            if (DateTime.Now <= dayIndex[0])
+                holidayCounter = "Days till " + nameOfHoliday + ": " + timeSpanTilHoliday.Days;
 
-            else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-                holidayCounter = nameOfHoliday + " now days left: " + d.Days;
+            else if (DateTime.Now >= dayIndex[0] && DateTime.Now <= dayIndex[1])
+                holidayCounter = nameOfHoliday + " now days left: " + timeSpanWhileHoliday.Days;
 
-            else if (DateTime.Now >= b[1])
-                holidayCounter = "Days since " + nameOfHoliday + ": " + e.Days;
+            else if (DateTime.Now >= dayIndex[1])
+                holidayCounter = "Days since " + nameOfHoliday + ": " + timeSpanPastHoliday.Days;
 
             return holidayCounter;
         }
