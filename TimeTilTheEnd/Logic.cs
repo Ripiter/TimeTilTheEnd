@@ -127,7 +127,6 @@ namespace TimeTilTheEnd
             }
             else
             {
-                //Console.WriteLine("Home");
                 Thread.Sleep(60000);
                 return "Home";
             }
