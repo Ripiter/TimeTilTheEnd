@@ -54,21 +54,14 @@ namespace TimeTilTheEnd
         public void FirstWrite()
         {
             string fileName = @"C:\daysSurvived.txt";
-            try
+            // Check if file already exists. If yes, delete it.     
+            if (!File.Exists(fileName))
             {
-                // Check if file already exists. If yes, delete it.     
-                if (!File.Exists(fileName))
+                // Create a new file in case it doesnt, and start counter at 0     
+                using (StreamWriter sw = File.CreateText(fileName))
                 {
-                    // Create a new file in case it doesnt, and start counter at 0     
-                    using (StreamWriter sw = File.CreateText(fileName))
-                    {
-                       sw.WriteLine(0);
-                    }    
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("File not created");
+                    sw.WriteLine(0);
+                }    
             }
         }
 

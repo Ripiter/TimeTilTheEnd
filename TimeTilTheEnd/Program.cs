@@ -15,8 +15,15 @@ namespace TimeTilTheEnd
         static void Main(string[] args)
         {
             Logic a = new Logic();
+            try
+            {
+                a.FirstWrite();
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("File Not Created");
+            }
 
-            a.FirstWrite();
             while (true)
             {
                 //string printF = a.NormalTimer();
