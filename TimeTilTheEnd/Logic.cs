@@ -11,8 +11,8 @@ namespace TimeTilTheEnd
 {
     class Logic
     {
-        Holiday ac = new Holiday();
-        string timeLeft = "16:00:00";
+        Holiday hoe = new Holiday();
+        string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
         int daysSurvived;
@@ -50,60 +50,51 @@ namespace TimeTilTheEnd
                 this.suffering = value;
             }
         }
-
+         
         public void FirstWrite()
         {
             string fileName = @"C:\daysSurvived.txt";
-
-            try
+            // Check if file already exists. If yes, delete it.     
+            if (!File.Exists(fileName))
             {
-                // Check if file already exists. If yes, delete it.     
-                if (!File.Exists(fileName))
+                // Create a new file in case it doesnt, and start counter at 0     
+                using (StreamWriter sw = File.CreateText(fileName))
                 {
-                // Create a new file     
-                    using (StreamWriter sw = File.CreateText(fileName))
-                    {
-                       sw.WriteLine(0);
-                    }    
-                }
-               
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("File not created");
+                    sw.WriteLine(0);
+                }    
             }
         }
 
         void WritingToTxt()
         {
-            StreamWriter write = new StreamWriter("C:/daysSurvived.txt");
-            write.Write(DaysSurvived);
-            write.Close();
             //Write to txt file
             //To write counter for days suffered
             //In case program closes
+            StreamWriter write = new StreamWriter("C:/daysSurvived.txt");
+            write.Write(DaysSurvived);
+            write.Close();
         }
+
         void ReadingFromTxt()
         {
             using (StreamReader read = new StreamReader("C:/daysSurvived.txt"))
             {
-                PrintDaysSurvived = int.Parse(read.ReadLine());
-                read.Close();
                 //Reading from a txt file
                 //To read counter for days suffered
                 //In case program closes
+                PrintDaysSurvived = int.Parse(read.ReadLine());
+                read.Close();
             }
         }
 
-      //  public bool Suffering { get => suffering; set => suffering = value; }
-
-
-        public void NormalTimer()
+        public string NormalTimer()
         {
+            string returnString = "";
+            //Check what day is it
             DayOfTheWeek();
-            DateTime a = DateTime.Parse(timeLeft);
 
-            //DateTime a = DateTime.Parse("16:00:00");
+            //timeLeft is time we got free
+            DateTime a = DateTime.Parse(timeLeft);
 
             TimeSpan g;
             TimeSpan minusTime = a - DateTime.Now;
@@ -111,41 +102,42 @@ namespace TimeTilTheEnd
             {
                 while (Suffering)
                 {
+                    Console.Clear();
                     EatingTime();
                     ReadingFromTxt();
-                    Console.Clear();
                     g = a - DateTime.Now;
-                    Console.Write(g);
-                    Console.WriteLine("");
-                    Console.WriteLine("Hours left: " + g.Hours);
-                    Console.WriteLine("Minutes left: " + g.Minutes);
-                    Console.WriteLine("Seconds left: " + g.Seconds);
+                    returnString = g + "\n\r" +
+                                   "Hours left: " +g.Hours +"\n\r" +
+                                   "Minuts left: " + g.Minutes +"\n\r" +
+                                   "Seconds left: " +g.Seconds+"\n\r" +
+                                   "Days Survived: "+PrintDaysSurvived+"\r";
                     if (eating == true)
-                        Console.WriteLine("Break!!! Eat!!! Now!!!");
-                    Console.WriteLine("Days Survived: " + PrintDaysSurvived);
-                    TripleAAA();
-                    HeadQuarters();
+                        returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
+                    HolidayFinder(); //Prints day left to holiday
+                    HeadQuarters(); //Prints day left to hovedforlob
                     
-                    Thread.Sleep(980);
                     if (g.Seconds <= -1)
                     {
                         WeAreWorking();
                         TheEndOfTime();
                     }
+                    return returnString;
                 }
+                return null;
             }
             else
             {
-                Console.WriteLine("Home");
+                //Console.WriteLine("Home");
                 Thread.Sleep(60000);
+                return "Home";
             }
         }
 
         void TheEndOfTime()
         {
-            Console.WriteLine("Time has ended");
             Suffering = false;
         }
+
         void WeAreWorking()
         {
             DaysSurvived = PrintDaysSurvived;
@@ -153,8 +145,7 @@ namespace TimeTilTheEnd
             WritingToTxt();
         }
 
-
-            DayOfWeek today = DateTime.Today.DayOfWeek;
+        DayOfWeek today = DateTime.Today.DayOfWeek;
         string DayOfTheWeek()
         {
             switch (today)
@@ -181,11 +172,14 @@ namespace TimeTilTheEnd
                     break;
                 default:
                     Suffering = false;
-                    break;        
-            } 
+                    break;
+            }
             return timeLeft;
         }
 
+        /// <summary>
+        /// When we got break, message will apear
+        /// </summary>
         void EatingTime()
         {
             DateTime launchTime = DateTime.Parse("11:00:00");
@@ -200,64 +194,100 @@ namespace TimeTilTheEnd
                 eating = false;
         }        
         
-        Random rnd = new Random();
-        void TripleAAA()
+        /// <summary>
+        /// Changes the holiday everyday second
+        /// </summary>
+        int gg;
+        public int ChangeHoliday(int threadNumber)
         {
-            DateTime[] paskeFerie = ac.Holidaay(2019, 4, 15, 2019, 4, 23);
-            DateTime[] sommerFerie = ac.Holidaay(2019, 6, 29, 2019, 7, 11);
+            this.gg = threadNumber;
 
-            int gg = rnd.Next(1, 3);
+            return gg;
+        }
+        /// <summary>
+        /// Every holiday goes here, where it send it further to calculate the amount of days til next holiday
+        /// and time from the last holiday
+        /// </summary>
+        public string HolidayFinder() 
+        {
+            string holidayFound = "";
+            //hoe is holiday method that returns datetime[] with datetime;
+            //first 3 numbers are made into 1 datetime and rest is made to check when it ends
+            DateTime[] paskeFerie = hoe.Holidaay(2019, 4, 15, 2019, 4, 23);
+            DateTime[] sommerFerie = hoe.Holidaay(2019, 6, 29, 2019, 7, 11);
 
             switch (gg) {
                 case 1:
-                  HolidayCounter(paskeFerie,"paskeferie");
+                  holidayFound = HolidayCounter(paskeFerie,"Easter Holiday");
                     break;
                 case 2:
-                  HolidayCounter(sommerFerie,"sommerferie");
+                  holidayFound = HolidayCounter(sommerFerie,"Summer Holiday");
                     break;
                 default:
-                    Console.WriteLine("Yeet the error");
+                  holidayFound = "Yeet the error";
                     break;
             }
-
+            return holidayFound;
         }
-        void HeadQuarters()
+        /// <summary>
+        /// HeadQuartes are for the days that we are in ringsted
+        /// from hovedforlob 2 to hovedforlob 5
+        /// </summary>
+        public string HeadQuarters()
         {
-            DateTime[] headTwo = ac.Holidaay(2020, 1, 13, 2020, 3, 20);
+            DateTime[] headTwo = hoe.Holidaay(2020, 1, 13, 2020, 3, 20);
 
-            HeadCounter(headTwo,"head2");
+            string a = HeadCounter(headTwo,"head2");
+            return a;
         }
-        void HeadCounter(DateTime[] b, string nameOfHead)
+        /// <summary>
+        /// DateTime[] is the start date of the x,y and string nameOfHead is for the name of the thing
+        /// HeadCounter is made to calculate and print the amount of days to x,y event
+        /// </summary>
+        /// <param name="dayIndex"></param>
+        /// <param name="nameOfHead"></param>
+        #region HeadCounter, HolidayCounter
+        string HeadCounter(DateTime[] dayIndex, string nameOfHead)
         {
-            TimeSpan c = b[0] - DateTime.Now;
-            TimeSpan d = b[1] - DateTime.Now;
-            TimeSpan e = DateTime.Now - b[1];
+            string daysPrint = "";
+            //dayIndex[0] is day the event starts
+            //dayIndex[1] is day the event ends
+            TimeSpan tilHovedforlob = dayIndex[0] - DateTime.Now;
+            TimeSpan whileHovedforlob = dayIndex[1] - DateTime.Now;
+            TimeSpan sinceHovedforlob = DateTime.Now - dayIndex[1];
 
-            if (DateTime.Now <= b[0])
-                Console.WriteLine("Days till " +nameOfHead +": "+ c.Days);
-            else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-                Console.WriteLine(nameOfHead + " now days left: " + d.Days);
+            if (DateTime.Now <= dayIndex[0])
+                daysPrint = "Days till " + nameOfHead + ": " + tilHovedforlob.Days;
 
-            else if (DateTime.Now >= b[1])
-                Console.WriteLine("Days since " + nameOfHead + ": " + e.Days);
+            else if (DateTime.Now >= dayIndex[0] && DateTime.Now <= dayIndex[1])
+                daysPrint = nameOfHead + " now days left: " + whileHovedforlob.Days;
 
+            else if (DateTime.Now >= dayIndex[1])
+                daysPrint = "Days since " + nameOfHead + ": " + sinceHovedforlob.Days;
+
+            return daysPrint;
         }
-        void HolidayCounter(DateTime[] b, string nameOfHoliday)
+        string HolidayCounter(DateTime[] dayIndex, string nameOfHoliday)
         {
-            
-            TimeSpan c = b[0] - DateTime.Now;
-            TimeSpan d = b[1] - DateTime.Now;
-            TimeSpan e = DateTime.Now - b[1];
+            string holidayCounter = "";
+            //dayIndex[0] is day the event starts
+            //dayIndex[1] is day the event ends
+            TimeSpan timeSpanTilHoliday = dayIndex[0] - DateTime.Now;
+            TimeSpan timeSpanWhileHoliday = dayIndex[1] - DateTime.Now;
+            TimeSpan timeSpanPastHoliday = DateTime.Now - dayIndex[1];
 
-            if (DateTime.Now <= b[0])
-                Console.WriteLine("Days till " +nameOfHoliday +": "+ c.Days);
+            if (DateTime.Now <= dayIndex[0])
+                holidayCounter = "Days till " + nameOfHoliday + ": " + timeSpanTilHoliday.Days;
 
-            else if (DateTime.Now >= b[0] && DateTime.Now <= b[1])
-                Console.WriteLine(nameOfHoliday +" now days left: " + d.Days);
+            else if (DateTime.Now >= dayIndex[0] && DateTime.Now <= dayIndex[1])
+                holidayCounter = nameOfHoliday + " now days left: " + timeSpanWhileHoliday.Days;
 
-            else if (DateTime.Now >= b[1])
-                Console.WriteLine("Days since " +nameOfHoliday +": "+ e.Days);
+            else if (DateTime.Now >= dayIndex[1])
+                holidayCounter = "Days since " + nameOfHoliday + ": " + timeSpanPastHoliday.Days;
+
+            return holidayCounter;
         }
+        #endregion
 
     }
 }
