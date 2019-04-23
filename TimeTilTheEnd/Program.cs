@@ -12,9 +12,28 @@ namespace TimeTilTheEnd
 {
     class Program : Holiday
     {
+        static Logic a = new Logic();
+        public static void DoWork()
+        {
+            int dayChange = 1;
+            while (true)
+            {
+                Console.WriteLine(a.NormalTimer());     //Writes time til school end
+                Console.WriteLine(a.HeadQuarters());    //Writes time til hovedforlob 
+                Console.WriteLine(a.HolidayFinder());   //Writes time til holiday
+                Thread.Sleep(1000);
+                    a.ChangeHoliday(dayChange);
+                        dayChange++;
+
+              if (dayChange == 3)
+                  dayChange = 1;
+            }
+        }
+
         static void Main(string[] args)
         {
-            Logic a = new Logic();
+            Thread sleepingThread = new Thread(DoWork);
+            #region Create file to write in
             try
             {
                 a.FirstWrite();
@@ -23,16 +42,10 @@ namespace TimeTilTheEnd
             {
                 Console.WriteLine("File Not Created");
             }
+            #endregion
 
-            while (true)
-            {
-                //string printF = a.NormalTimer();
-                //a.NormalTimer();
-                //PrintF(a.NormalTimer());
-                Console.WriteLine(a.NormalTimer());
-                Console.WriteLine(a.HeadQuarters());
-                Console.WriteLine(a.HolidayFinder());
-            }
+
+            sleepingThread.Start();
         }
     }
 }

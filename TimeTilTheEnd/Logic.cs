@@ -100,7 +100,6 @@ namespace TimeTilTheEnd
             {
                 while (Suffering)
                 {
-                    Thread.Sleep(975);
                     Console.Clear();
                     EatingTime();
                     ReadingFromTxt();
@@ -202,6 +201,13 @@ namespace TimeTilTheEnd
         /// and time from the last holiday
         /// </summary>
         Random rnd = new Random();
+        int gg;
+        public int ChangeHoliday(int threadNumber)
+        {
+            this.gg = threadNumber;
+
+            return gg;
+        }
         public string HolidayFinder() 
         {
             string holidayFound = "";
@@ -209,8 +215,6 @@ namespace TimeTilTheEnd
             //first 3 numbers are made into 1 datetime and rest is made to check when it ends
             DateTime[] paskeFerie = hoe.Holidaay(2019, 4, 15, 2019, 4, 23);
             DateTime[] sommerFerie = hoe.Holidaay(2019, 6, 29, 2019, 7, 11);
-
-            int gg = rnd.Next(1, 3);
 
             switch (gg) {
                 case 1:
@@ -220,7 +224,7 @@ namespace TimeTilTheEnd
                   holidayFound = HolidayCounter(sommerFerie,"Summer Holiday");
                     break;
                 default:
-                    Console.WriteLine("Yeet the error");
+                  holidayFound = "Yeet the error";
                     break;
             }
             return holidayFound;
