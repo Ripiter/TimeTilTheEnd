@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
+using System.Globalization;
 
 
 namespace TimeTilTheEnd
@@ -102,15 +103,16 @@ namespace TimeTilTheEnd
             {
                 while (Suffering)
                 {
+                    string week = WhatWeekWeAreIn();
                     Console.Clear();
                     EatingTime();
                     ReadingFromTxt();
                     g = a - DateTime.Now;
                     returnString = g + "\n\r" +
-                                   "Hours left: " +g.Hours +"\n\r" +
-                                   "Minuts left: " + g.Minutes +"\n\r" +
-                                   "Seconds left: " +g.Seconds+"\n\r" +
-                                   "Days Survived: "+PrintDaysSurvived+"\r";
+                                   "Hours left: " + g.Hours + "\n\r" +
+                                   "Minuts left: " + g.Minutes + "\n\r" +
+                                   "Seconds left: " + g.Seconds + "\n\r" +
+                                   "Days Survived: " + PrintDaysSurvived + "\r";
                     if (eating == true)
                         returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
                     HolidayFinder(); //Prints day left to holiday
@@ -177,6 +179,29 @@ namespace TimeTilTheEnd
             return timeLeft;
         }
 
+        public string WhatWeekWeAreIn()
+        {
+            CultureInfo culture1 = CultureInfo.CurrentCulture;
+          
+         
+            // Gets the Calendar instance associated with a CultureInfo.
+            CultureInfo myCI = new CultureInfo(culture1.Name);
+            Calendar myCal = myCI.Calendar;
+
+            // Gets the DTFI properties required by GetWeekOfYear.
+            CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+
+            //Console.WriteLine("The current week {0}.", myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW));
+
+            string calendarReturn = string.Format("The current week: {0}" +"\n\r"+
+                                                  "Day of the year: {1}" + "\n\r" +
+                                                  "What month we are in: {2}",
+                                                   myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW), DateTime.Now.DayOfYear, DateTime.Now.Month);
+
+            return calendarReturn;
+        }
+
         /// <summary>
         /// When we got break, message will apear
         /// </summary>
@@ -237,7 +262,7 @@ namespace TimeTilTheEnd
         {
             DateTime[] headTwo = hoe.Holidaay(2020, 1, 13, 2020, 3, 20);
 
-            string a = HeadCounter(headTwo,"head2");
+            string a = HeadCounter(headTwo, "hovedforloeb 2");
             return a;
         }
         /// <summary>

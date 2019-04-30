@@ -20,6 +20,7 @@ namespace TimeTilTheEnd
             {
                 a.ChangeHoliday(dayChange);         //Changes holiday
                 Console.WriteLine(a.NormalTimer());     //Writes time til school end
+                Console.WriteLine(a.WhatWeekWeAreIn()); //Calendar for stuff
                 Console.WriteLine(a.HeadQuarters());    //Writes time til hovedforlob 
                 Console.WriteLine(a.HolidayFinder());   //Writes time til holiday
                 Thread.Sleep(1000);
