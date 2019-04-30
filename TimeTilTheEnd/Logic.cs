@@ -13,6 +13,7 @@ namespace TimeTilTheEnd
     class Logic
     {
         Holiday hoe = new Holiday();
+        List<DateTime> dateTimes = new List<DateTime>(); 
         string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
@@ -105,6 +106,7 @@ namespace TimeTilTheEnd
                 {
                     string week = WhatWeekWeAreIn();
                     Console.Clear();
+                    Console.WriteLine(dateTimes.Count);
                     EatingTime();
                     ReadingFromTxt();
                     g = a - DateTime.Now;
@@ -145,6 +147,13 @@ namespace TimeTilTheEnd
             DaysSurvived = PrintDaysSurvived;
             DaysSurvived++;
             WritingToTxt();
+        }
+
+        //Gets array, and adds it to the list
+        void ListOfHolidays(DateTime[] dates)
+        {
+            if (!dateTimes.Contains(dates[0]))
+                dateTimes.Add(dates[0]);   
         }
 
         DayOfWeek today = DateTime.Today.DayOfWeek;
@@ -241,6 +250,10 @@ namespace TimeTilTheEnd
             DateTime[] paskeFerie = hoe.Holidaay(2019, 4, 15, 2019, 4, 23);
             DateTime[] sommerFerie = hoe.Holidaay(2019, 6, 29, 2019, 7, 11);
 
+
+            ListOfHolidays(paskeFerie);
+            ListOfHolidays(sommerFerie);
+
             switch (gg) {
                 case 1:
                   holidayFound = HolidayCounter(paskeFerie,"Easter Holiday");
@@ -261,7 +274,8 @@ namespace TimeTilTheEnd
         public string HeadQuarters()
         {
             DateTime[] headTwo = hoe.Holidaay(2020, 1, 13, 2020, 3, 20);
-
+            
+            
             string a = HeadCounter(headTwo, "hovedforloeb 2");
             return a;
         }
