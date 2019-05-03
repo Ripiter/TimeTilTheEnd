@@ -23,6 +23,7 @@ namespace TimeTilTheEnd
                 Console.WriteLine(a.WhatWeekWeAreIn()); //Calendar for stuff
                 Console.WriteLine(a.HeadQuarters());    //Writes time til hovedforlob 
                 Console.WriteLine(a.HolidayFinder());   //Writes time til holiday
+                Console.WriteLine(a.MoneyErnedToday());
                 Thread.Sleep(1000);
                         dayChange++;
 

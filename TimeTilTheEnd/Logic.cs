@@ -13,12 +13,17 @@ namespace TimeTilTheEnd
     class Logic
     {
         Holiday hoe = new Holiday();
-        List<DateTime> dateTimes = new List<DateTime>(); 
+        List<DateTime> dateTimes = new List<DateTime>();
+
+        #region variables
         string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
         int daysSurvived;
         int printDaysSurvived;
+        #endregion
+
+        #region Get Set
         public int PrintDaysSurvived
         {
             get
@@ -52,9 +57,13 @@ namespace TimeTilTheEnd
                 this.suffering = value;
             }
         }
-         
+        #endregion
+
+        
+        
         public void FirstWrite()
         {
+            ///Make this relative to the projekt
             string fileName = @"C:\daysSurvived.txt";
             // Check if file already exists. If yes, delete it.     
             if (!File.Exists(fileName))
@@ -72,6 +81,8 @@ namespace TimeTilTheEnd
             //Write to txt file
             //To write counter for days suffered
             //In case program closes
+
+            ///Makes it dynamic
             StreamWriter write = new StreamWriter("C:/daysSurvived.txt");
             write.Write(DaysSurvived);
             write.Close();
@@ -88,7 +99,7 @@ namespace TimeTilTheEnd
                 read.Close();
             }
         }
-
+       
         public string NormalTimer()
         {
             string returnString = "";
@@ -106,7 +117,6 @@ namespace TimeTilTheEnd
                 {
                     string week = WhatWeekWeAreIn();
                     Console.Clear();
-                    Console.WriteLine(dateTimes.Count);
                     EatingTime();
                     ReadingFromTxt();
                     g = a - DateTime.Now;
@@ -238,6 +248,7 @@ namespace TimeTilTheEnd
 
             return gg;
         }
+        #region HeadCounter, HolidayCounter
         /// <summary>
         /// Every holiday goes here, where it send it further to calculate the amount of days til next holiday
         /// and time from the last holiday
@@ -253,7 +264,6 @@ namespace TimeTilTheEnd
 
             ListOfHolidays(paskeFerie);
             ListOfHolidays(sommerFerie);
-
             switch (gg) {
                 case 1:
                   holidayFound = HolidayCounter(paskeFerie,"Easter Holiday");
@@ -285,7 +295,6 @@ namespace TimeTilTheEnd
         /// </summary>
         /// <param name="dayIndex"></param>
         /// <param name="nameOfHead"></param>
-        #region HeadCounter, HolidayCounter
         string HeadCounter(DateTime[] dayIndex, string nameOfHead)
         {
             string daysPrint = "";
@@ -328,5 +337,34 @@ namespace TimeTilTheEnd
         }
         #endregion
 
+        #region Money earned per minute
+                
+        int MoneyErnedInAYear = 91680;
+        float proceftForSkat = 0.38f;
+
+        public string MoneyErnedToday()
+        {
+            ///Make it count up, calculate how much for a sec :D
+            return "Money Erned per hour before skat: " + MoneyErnedBeforeSkat() + "\nMoney after skat" + MoneyErnedAfterSkat();
+        }
+
+        float MoneyErnedAfterSkat()
+        {
+            float moneyForSkat = MoneyErnedBeforeSkat() * proceftForSkat;
+ 
+            float moneyAfterSkat = MoneyErnedBeforeSkat() - moneyForSkat;
+            return moneyAfterSkat;
+        }
+
+        float MoneyErnedBeforeSkat()
+        {
+            float moneyPerDay = MoneyErnedInAYear / 365;
+            int hoursWorkedPerWeek =  37 / 5;
+
+            float moneyErnedPerHour = moneyPerDay / hoursWorkedPerWeek;
+            return moneyErnedPerHour;
+        }
+
+        #endregion
     }
 }
