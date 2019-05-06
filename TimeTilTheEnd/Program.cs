@@ -12,41 +12,58 @@ namespace TimeTilTheEnd
 {
     class Program : Holiday
     {
-        static Logic a = new Logic();
-        public static void DoWork()
-        {
-            int dayChange = 1;
-            while (true)
-            {
-                a.ChangeHoliday(dayChange);         //Changes holiday
-                Console.WriteLine(a.NormalTimer());     //Writes time til school end
-                Console.WriteLine(a.WhatWeekWeAreIn()); //Calendar for stuff
-                Console.WriteLine(a.HeadQuarters());    //Writes time til hovedforlob 
-                Console.WriteLine(a.HolidayFinder());   //Writes time til holiday
-                Console.WriteLine(a.MoneyErnedToday());
-                Thread.Sleep(1000);
-                        dayChange++;
+        static Logic timer = new Logic();
+        static Skat skat = new Skat();
 
-              if (dayChange == 3)
-                  dayChange = 1;
-            }
+        static string skatPrint;
+
+        static void PrintSkat()
+        {
+            skatPrint = skat.MoneyErnedToday();
         }
 
         static void Main(string[] args)
         {
-            Thread sleepingThread = new Thread(DoWork);
+            int dayChange = 0;
             #region Create file to write in
             try
             {
-                a.FirstWrite();
+                timer.FirstWrite();
             }
             catch(Exception)
             {
                 Console.WriteLine("File Not Created");
             }
             #endregion
+            Thread thr = new Thread(PrintSkat);
+            thr.Start();
 
-            sleepingThread.Start();
+            while (true)
+            {
+                dayChange++;
+                timer.ChangeHoliday(dayChange);         //Changes holiday
+                //Console.WriteLine(timer.NormalTimer());     //Writes time til school end
+                //Console.WriteLine(timer.WhatWeekWeAreIn()); //Calendar for stuff
+                //Console.WriteLine(timer.HeadQuarters());    //Writes time til hovedforlob 
+                //Console.WriteLine(timer.HolidayFinder());   //Writes time til holiday
+                //Console.WriteLine(skat.MoneyErnedToday());
+
+                Console.Clear();
+               // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
+                string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
+
+                ///Dont know which is better
+
+                Console.WriteLine(a);
+
+
+                Thread.Sleep(1000);
+                Console.WriteLine(timer.DateTimes.Count);
+                if (dayChange == timer.DateTimes.Count)
+                    dayChange = 0;
+
+                Console.WriteLine(timer.DateTimes.Count);
+            }
         }
     }
 }

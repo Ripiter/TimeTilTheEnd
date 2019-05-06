@@ -15,6 +15,7 @@ namespace TimeTilTheEnd
         Holiday hoe = new Holiday();
         List<DateTime> dateTimes = new List<DateTime>();
 
+
         #region variables
         string timeLeft = "";
         bool eating = false;
@@ -24,6 +25,17 @@ namespace TimeTilTheEnd
         #endregion
 
         #region Get Set
+        public List<DateTime> DateTimes
+        {
+            get
+            {
+                return this.dateTimes;
+            }
+            set
+            {
+                this.dateTimes = value;
+            }
+        }
         public int PrintDaysSurvived
         {
             get
@@ -33,17 +45,6 @@ namespace TimeTilTheEnd
             set
             {
                 this.printDaysSurvived = value;
-            }
-        }
-        public int DaysSurvived
-        {
-            get
-            {
-                return this.daysSurvived;
-            }
-            set
-            {
-                this.daysSurvived = value;
             }
         }
         public bool Suffering
@@ -59,8 +60,8 @@ namespace TimeTilTheEnd
         }
         #endregion
 
-        
-        
+
+        #region Txt Files
         public void FirstWrite()
         {
             ///Make this relative to the projekt
@@ -84,7 +85,7 @@ namespace TimeTilTheEnd
 
             ///Makes it dynamic
             StreamWriter write = new StreamWriter("C:/daysSurvived.txt");
-            write.Write(DaysSurvived);
+            write.Write(daysSurvived);
             write.Close();
         }
 
@@ -99,7 +100,8 @@ namespace TimeTilTheEnd
                 read.Close();
             }
         }
-       
+        #endregion
+
         public string NormalTimer()
         {
             string returnString = "";
@@ -116,7 +118,6 @@ namespace TimeTilTheEnd
                 while (Suffering)
                 {
                     string week = WhatWeekWeAreIn();
-                    Console.Clear();
                     EatingTime();
                     ReadingFromTxt();
                     g = a - DateTime.Now;
@@ -127,8 +128,6 @@ namespace TimeTilTheEnd
                                    "Days Survived: " + PrintDaysSurvived + "\r";
                     if (eating == true)
                         returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
-                    HolidayFinder(); //Prints day left to holiday
-                    HeadQuarters(); //Prints day left to hovedforlob
                     
                     if (g.Seconds <= -1)
                     {
@@ -152,10 +151,10 @@ namespace TimeTilTheEnd
             Suffering = false;
         }
 
-        void WeAreWorking()
+        public void WeAreWorking()
         {
-            DaysSurvived = PrintDaysSurvived;
-            DaysSurvived++;
+            daysSurvived = PrintDaysSurvived;
+            daysSurvived++;
             WritingToTxt();
         }
 
@@ -201,7 +200,7 @@ namespace TimeTilTheEnd
         public string WhatWeekWeAreIn()
         {
             CultureInfo culture1 = CultureInfo.CurrentCulture;
-          
+           
          
             // Gets the Calendar instance associated with a CultureInfo.
             CultureInfo myCI = new CultureInfo(culture1.Name);
@@ -241,12 +240,12 @@ namespace TimeTilTheEnd
         /// <summary>
         /// Changes the holiday everyday second
         /// </summary>
-        int gg;
+        int changeHolidayDay;
         public int ChangeHoliday(int threadNumber)
         {
-            this.gg = threadNumber;
+            this.changeHolidayDay = threadNumber;
 
-            return gg;
+            return changeHolidayDay;
         }
         #region HeadCounter, HolidayCounter
         /// <summary>
@@ -264,7 +263,7 @@ namespace TimeTilTheEnd
 
             ListOfHolidays(paskeFerie);
             ListOfHolidays(sommerFerie);
-            switch (gg) {
+            switch (changeHolidayDay) {
                 case 1:
                   holidayFound = HolidayCounter(paskeFerie,"Easter Holiday");
                     break;
@@ -337,34 +336,6 @@ namespace TimeTilTheEnd
         }
         #endregion
 
-        #region Money earned per minute
-                
-        int MoneyErnedInAYear = 91680;
-        float proceftForSkat = 0.38f;
-
-        public string MoneyErnedToday()
-        {
-            ///Make it count up, calculate how much for a sec :D
-            return "Money Erned per hour before skat: " + MoneyErnedBeforeSkat() + "\nMoney after skat" + MoneyErnedAfterSkat();
-        }
-
-        float MoneyErnedAfterSkat()
-        {
-            float moneyForSkat = MoneyErnedBeforeSkat() * proceftForSkat;
- 
-            float moneyAfterSkat = MoneyErnedBeforeSkat() - moneyForSkat;
-            return moneyAfterSkat;
-        }
-
-        float MoneyErnedBeforeSkat()
-        {
-            float moneyPerDay = MoneyErnedInAYear / 365;
-            int hoursWorkedPerWeek =  37 / 5;
-
-            float moneyErnedPerHour = moneyPerDay / hoursWorkedPerWeek;
-            return moneyErnedPerHour;
-        }
-
-        #endregion
+        
     }
 }
