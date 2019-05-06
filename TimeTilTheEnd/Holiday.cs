@@ -10,7 +10,7 @@ namespace TimeTilTheEnd
     class Holiday
     {
         /// <summary>
-        /// create 2 dates
+        /// create 2 dates, start day and end day of a date
         /// </summary>
         /// <param name="startyear"></param>
         /// <param name="startmonth"></param>

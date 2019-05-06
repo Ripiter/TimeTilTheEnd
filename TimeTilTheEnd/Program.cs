@@ -10,7 +10,7 @@ using Microsoft.Win32;
 
 namespace TimeTilTheEnd
 {
-    class Program : Holiday
+    class Program
     {
         static Logic timer = new Logic();
         static Skat skat = new Skat();
@@ -21,7 +21,6 @@ namespace TimeTilTheEnd
         {
             skatPrint = skat.MoneyErnedToday();
         }
-
         static void Main(string[] args)
         {
             int dayChange = 0;
@@ -35,6 +34,7 @@ namespace TimeTilTheEnd
                 Console.WriteLine("File Not Created");
             }
             #endregion
+            //TODO: add more threads
             Thread thr = new Thread(PrintSkat);
             thr.Start();
 
@@ -50,11 +50,11 @@ namespace TimeTilTheEnd
 
                 Console.Clear();
                // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
-                string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
+                string printF = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
 
                 ///Dont know which is better
 
-                Console.WriteLine(a);
+                Console.WriteLine(printF);
 
 
                 Thread.Sleep(1000);
