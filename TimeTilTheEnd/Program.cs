@@ -16,11 +16,29 @@ namespace TimeTilTheEnd
         static Skat skat = new Skat();
 
         static string skatPrint;
+        static string normalTimerPrint;
+        static string whatWeekPrint;
 
         static void PrintSkat()
         {
             skatPrint = skat.MoneyErnedToday();
         }
+        static void PrintNormalTimer()
+        {
+            while (true)
+            {
+                normalTimerPrint = timer.NormalTimer();
+                Thread.Sleep(333);
+            }
+        }
+        static void PrintWhatWeek()
+        {
+            while (true)
+            {
+                whatWeekPrint = timer.WhatWeekWeAreIn();
+            }
+        }
+
         static void Main(string[] args)
         {
             int dayChange = 0;
@@ -35,8 +53,15 @@ namespace TimeTilTheEnd
             }
             #endregion
             //TODO: add more threads
-            Thread thr = new Thread(PrintSkat);
-            thr.Start();
+            Thread thrSkat = new Thread(PrintSkat);
+            Thread thrTimer = new Thread(PrintNormalTimer);
+            Thread thrWeek = new Thread(PrintWhatWeek);
+
+
+            thrSkat.Start();
+            thrTimer.Start();
+            thrWeek.Start();
+
              
             while (true)
             {
@@ -50,7 +75,7 @@ namespace TimeTilTheEnd
 
                 Console.Clear();
                // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
-                string printF = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
+                string printF = normalTimerPrint + "\n" + whatWeekPrint + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
 
                 ///Dont know which is better
 
