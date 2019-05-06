@@ -10,7 +10,7 @@ using System.Globalization;
 
 namespace TimeTilTheEnd
 {
-    class Logic
+    class Timer
     {
         Holiday hoe = new Holiday();
         List<DateTime> dateTimes = new List<DateTime>();

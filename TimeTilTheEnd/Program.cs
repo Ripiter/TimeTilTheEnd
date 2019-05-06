@@ -12,7 +12,7 @@ namespace TimeTilTheEnd
 {
     class Program : Holiday
     {
-        static Logic a = new Logic();
+        static Timer a = new Timer();
         public static void DoWork()
         {
             int dayChange = 1;
