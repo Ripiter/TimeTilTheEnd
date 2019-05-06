@@ -12,41 +12,38 @@ namespace TimeTilTheEnd
 {
     class Program : Holiday
     {
-        static Timer a = new Timer();
-        public static void DoWork()
-        {
-            int dayChange = 1;
-            while (true)
-            {
-                a.ChangeHoliday(dayChange);         //Changes holiday
-                Console.WriteLine(a.NormalTimer());     //Writes time til school end
-                Console.WriteLine(a.WhatWeekWeAreIn()); //Calendar for stuff
-                Console.WriteLine(a.HeadQuarters());    //Writes time til hovedforlob 
-                Console.WriteLine(a.HolidayFinder());   //Writes time til holiday
-                Console.WriteLine(a.MoneyErnedToday());
-                Thread.Sleep(1000);
-                        dayChange++;
-
-              if (dayChange == 3)
-                  dayChange = 1;
-            }
-        }
-
+        static Timer timer = new Timer();
+        static Skat skat = new Skat();
+      
         static void Main(string[] args)
         {
-            Thread sleepingThread = new Thread(DoWork);
             #region Create file to write in
             try
             {
-                a.FirstWrite();
+                timer.FirstWrite();
             }
             catch(Exception)
             {
                 Console.WriteLine("File Not Created");
             }
             #endregion
+            
+            int dayChange = 1;
 
-            sleepingThread.Start();
+            while (true)
+            { 
+                timer.ChangeHoliday(dayChange);         //Changes holiday
+                Console.WriteLine(timer.NormalTimer());     //Writes time til school end
+                Console.WriteLine(timer.WhatWeekWeAreIn()); //Calendar for stuff
+                Console.WriteLine(timer.HeadQuarters());    //Writes time til hovedforlob 
+                Console.WriteLine(timer.HolidayFinder());   //Writes time til holiday
+                Console.WriteLine(skat.MoneyErnedToday());
+                Thread.Sleep(1000);
+                dayChange++;
+
+                if (dayChange == 3)
+                    dayChange = 1;
+            }
         }
     }
 }
