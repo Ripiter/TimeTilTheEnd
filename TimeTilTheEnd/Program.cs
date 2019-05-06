@@ -37,7 +37,7 @@ namespace TimeTilTheEnd
             //TODO: add more threads
             Thread thr = new Thread(PrintSkat);
             thr.Start();
-
+             
             while (true)
             {
                 dayChange++;
