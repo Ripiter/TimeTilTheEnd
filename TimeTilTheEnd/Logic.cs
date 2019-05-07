@@ -20,8 +20,8 @@ namespace TimeTilTheEnd
         string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
-        int daysSurvived;
-        int printDaysSurvived;
+        int readFromTxtdaysSurvived;
+        int writeToTxtDaysSurvived;
         #endregion
 
         #region Get Set
@@ -34,17 +34,6 @@ namespace TimeTilTheEnd
             set
             {
                 this.dateTimes = value;
-            }
-        }
-        public int PrintDaysSurvived
-        {
-            get
-            {
-                return this.printDaysSurvived;
-            }
-            set
-            {
-                this.printDaysSurvived = value;
             }
         }
         public bool Suffering
@@ -77,7 +66,7 @@ namespace TimeTilTheEnd
             }
         }
 
-        void WritingToTxt()
+        void WritingToTxt(string _txtWrite)
         {
             //Write to txt file
             //To write counter for days suffered
@@ -85,7 +74,7 @@ namespace TimeTilTheEnd
 
             ///Makes it dynamic
             StreamWriter write = new StreamWriter("C:/daysSurvived.txt");
-            write.Write(daysSurvived);
+            write.Write(_txtWrite);
             write.Close();
         }
 
@@ -96,7 +85,7 @@ namespace TimeTilTheEnd
                 //Reading from a txt file
                 //To read counter for days suffered
                 //In case program closes
-                PrintDaysSurvived = int.Parse(read.ReadLine());
+                readFromTxtdaysSurvived = int.Parse(read.ReadLine());
                 read.Close();
             }
         }
@@ -104,44 +93,41 @@ namespace TimeTilTheEnd
 
         public string NormalTimer()
         {
-            string returnString = "";
+            string returnString;
             //Check what day is it
-            DayOfTheWeek();
+            ///DayOfTheWeek();
+            DateTime a = DateTime.Parse(DayOfTheWeek());
 
             //timeLeft is time we got free
-            DateTime a = DateTime.Parse(timeLeft);
-
-            TimeSpan g;
-            TimeSpan minusTime = a - DateTime.Now;
-            if (minusTime.Seconds > -1)
+            
+            TimeSpan g = a - DateTime.Now;
+            if (g.Seconds > -1)
             {
                 while (Suffering)
                 {
-                    string week = WhatWeekWeAreIn();
+                   // string week = WhatWeekWeAreIn();
                     EatingTime();
                     ReadingFromTxt();
-                    g = a - DateTime.Now;
                     returnString = g + "\n\r" +
                                    "Hours left: " + g.Hours + "\n\r" +
                                    "Minuts left: " + g.Minutes + "\n\r" +
                                    "Seconds left: " + g.Seconds + "\n\r" +
-                                   "Days Survived: " + PrintDaysSurvived + "\r";
+                                   "Days Survived: " + readFromTxtdaysSurvived + "\r";
                     if (eating == true)
                         returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
                     
                     if (g.Seconds <= -1)
                     {
-                        WeAreWorking();
                         TheEndOfTime();
                     }
                     return returnString;
                 }
-                return null;
+                return "Home";
             }
             else
             {
-                //Console.WriteLine("Home");
-                Thread.Sleep(60000);
+                WeAreDoneWorking();
+                Thread.Sleep(6000);
                 return "Home";
             }
         }
@@ -151,11 +137,12 @@ namespace TimeTilTheEnd
             Suffering = false;
         }
 
-        public void WeAreWorking()
+        public void WeAreDoneWorking()
         {
-            daysSurvived = PrintDaysSurvived;
-            daysSurvived++;
-            WritingToTxt();
+            //daysSurvived = printDaysSurvived;
+            writeToTxtDaysSurvived = readFromTxtdaysSurvived;
+            writeToTxtDaysSurvived++;
+            WritingToTxt(writeToTxtDaysSurvived.ToString());
         }
 
         //Gets array, and adds it to the list
@@ -165,9 +152,9 @@ namespace TimeTilTheEnd
                 dateTimes.Add(dates[0]);   
         }
 
-        DayOfWeek today = DateTime.Today.DayOfWeek;
         string DayOfTheWeek()
         {
+            DayOfWeek today = DateTime.Today.DayOfWeek;
             switch (today)
             {
                 case DayOfWeek.Monday:

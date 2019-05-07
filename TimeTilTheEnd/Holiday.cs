@@ -19,7 +19,7 @@ namespace TimeTilTheEnd
         /// <param name="endmonth"></param>
         /// <param name="endday"></param>
         /// <returns></returns>
-        public DateTime[] Holidaay(int startyear, int startmonth, int startday, int endyear, int endmonth, int endday)
+        public DateTime[] Holidaay(int startyear, byte startmonth, byte startday, int endyear, byte endmonth, byte endday)
         {
             DateTime startdate = new DateTime(startyear, startmonth, startday);
             DateTime enddate = new DateTime(endyear, endmonth, endday);

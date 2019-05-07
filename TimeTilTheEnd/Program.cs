@@ -16,21 +16,18 @@ namespace TimeTilTheEnd
         static Skat skat = new Skat();
 
         static string skatPrint;
-        static string normalTimerPrint;
+       // static string normalTimerPrint;
         static string whatWeekPrint;
 
         static void PrintSkat()
         {
-            skatPrint = skat.MoneyErnedToday();
-        }
-        static void PrintNormalTimer()
-        {
             while (true)
             {
-                normalTimerPrint = timer.NormalTimer();
-                Thread.Sleep(333);
+                skatPrint = skat.MoneyErnedToday();
+                Thread.Sleep(60000);
             }
         }
+
         static void PrintWhatWeek()
         {
             while (true)
@@ -54,17 +51,15 @@ namespace TimeTilTheEnd
             #endregion
             //TODO: add more threads
             Thread thrSkat = new Thread(PrintSkat);
-            Thread thrTimer = new Thread(PrintNormalTimer);
             Thread thrWeek = new Thread(PrintWhatWeek);
 
 
             thrSkat.Start();
-            thrTimer.Start();
             thrWeek.Start();
 
              
             while (true)
-            {
+            {               
                 dayChange++;
                 timer.ChangeHoliday(dayChange);         //Changes holiday
                 //Console.WriteLine(timer.NormalTimer());     //Writes time til school end
@@ -73,21 +68,19 @@ namespace TimeTilTheEnd
                 //Console.WriteLine(timer.HolidayFinder());   //Writes time til holiday
                 //Console.WriteLine(skat.MoneyErnedToday());
 
-                Console.Clear();
                // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
-                string printF = normalTimerPrint + "\n" + whatWeekPrint + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
+                string printF = timer.NormalTimer() + whatWeekPrint + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
 
                 ///Dont know which is better
-
+                //Console.WriteLine(timer.NormalTimer());
+                Thread.Sleep(1000);
+                Console.Clear();
                 Console.WriteLine(printF);
 
-
-                Thread.Sleep(1000);
-                Console.WriteLine(timer.DateTimes.Count);
+               
                 if (dayChange == timer.DateTimes.Count)
                     dayChange = 0;
-
-                Console.WriteLine(timer.DateTimes.Count);
+                
             }
         }
     }
