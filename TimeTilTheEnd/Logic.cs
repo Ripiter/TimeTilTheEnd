@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
+using System.Globalization;
 
 
 namespace TimeTilTheEnd
@@ -12,31 +13,27 @@ namespace TimeTilTheEnd
     class Logic
     {
         Holiday hoe = new Holiday();
+        List<DateTime> dateTimes = new List<DateTime>();
+
+
+        #region variables
         string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
-        int daysSurvived;
-        int printDaysSurvived;
-        public int PrintDaysSurvived
+        int readFromTxtdaysSurvived;
+        int writeToTxtDaysSurvived;
+        #endregion
+
+        #region Get Set
+        public List<DateTime> DateTimes
         {
             get
             {
-                return this.printDaysSurvived;
+                return this.dateTimes;
             }
             set
             {
-                this.printDaysSurvived = value;
-            }
-        }
-        public int DaysSurvived
-        {
-            get
-            {
-                return this.daysSurvived;
-            }
-            set
-            {
-                this.daysSurvived = value;
+                this.dateTimes = value;
             }
         }
         public bool Suffering
@@ -50,9 +47,13 @@ namespace TimeTilTheEnd
                 this.suffering = value;
             }
         }
-         
+        #endregion
+
+
+        #region Txt Files
         public void FirstWrite()
         {
+            ///Make this relative to the projekt
             string fileName = @"C:\daysSurvived.txt";
             // Check if file already exists. If yes, delete it.     
             if (!File.Exists(fileName))
@@ -65,70 +66,76 @@ namespace TimeTilTheEnd
             }
         }
 
-        void WritingToTxt()
+        void WritingToTxt(string _txtWrite)
         {
             //Write to txt file
             //To write counter for days suffered
             //In case program closes
+
+            ///Makes it dynamic
             StreamWriter write = new StreamWriter("C:/daysSurvived.txt");
-            write.Write(DaysSurvived);
+            write.Write(_txtWrite);
             write.Close();
         }
 
         void ReadingFromTxt()
         {
+            Skat skat = new Skat();
+            Program prog = new Program();
             using (StreamReader read = new StreamReader("C:/daysSurvived.txt"))
             {
                 //Reading from a txt file
                 //To read counter for days suffered
                 //In case program closes
-                PrintDaysSurvived = int.Parse(read.ReadLine());
+                readFromTxtdaysSurvived = int.Parse(read.ReadLine());
+               
+                //TO DO:
+                    //readFromTxtdaysSurvived = a[0];
+                    //skat.InTotalBefore = a[1];
+                    //skat.InTotalAfter = a[2];
+               
                 read.Close();
             }
         }
+        #endregion
 
         public string NormalTimer()
         {
-            string returnString = "";
+            string returnString;
             //Check what day is it
-            DayOfTheWeek();
+            ///DayOfTheWeek();
+            DateTime a = DateTime.Parse(DayOfTheWeek());
 
             //timeLeft is time we got free
-            DateTime a = DateTime.Parse(timeLeft);
-
-            TimeSpan g;
-            TimeSpan minusTime = a - DateTime.Now;
-            if (minusTime.Seconds > -1)
+            
+            TimeSpan g = a - DateTime.Now;
+            if (g.Seconds > -1)
             {
                 while (Suffering)
                 {
-                    Console.Clear();
+                   // string week = WhatWeekWeAreIn();
                     EatingTime();
                     ReadingFromTxt();
-                    g = a - DateTime.Now;
                     returnString = g + "\n\r" +
-                                   "Hours left: " +g.Hours +"\n\r" +
-                                   "Minuts left: " + g.Minutes +"\n\r" +
-                                   "Seconds left: " +g.Seconds+"\n\r" +
-                                   "Days Survived: "+PrintDaysSurvived+"\r";
+                                   "Hours left: " + g.Hours + "\n\r" +
+                                   "Minuts left: " + g.Minutes + "\n\r" +
+                                   "Seconds left: " + g.Seconds + "\n\r" +
+                                   "Days Survived: " + readFromTxtdaysSurvived + "\nr";
                     if (eating == true)
                         returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
-                    HolidayFinder(); //Prints day left to holiday
-                    HeadQuarters(); //Prints day left to hovedforlob
                     
                     if (g.Seconds <= -1)
                     {
-                        WeAreWorking();
                         TheEndOfTime();
                     }
                     return returnString;
                 }
-                return null;
+                return "Home";
             }
             else
             {
-                //Console.WriteLine("Home");
-                Thread.Sleep(60000);
+                WeAreDoneWorking();
+                Thread.Sleep(6000);
                 return "Home";
             }
         }
@@ -138,16 +145,24 @@ namespace TimeTilTheEnd
             Suffering = false;
         }
 
-        void WeAreWorking()
+        public void WeAreDoneWorking()
         {
-            DaysSurvived = PrintDaysSurvived;
-            DaysSurvived++;
-            WritingToTxt();
+            //daysSurvived = printDaysSurvived;
+            writeToTxtDaysSurvived = readFromTxtdaysSurvived;
+            writeToTxtDaysSurvived++;
+            WritingToTxt(writeToTxtDaysSurvived.ToString());
         }
 
-        DayOfWeek today = DateTime.Today.DayOfWeek;
+        //Gets array, and adds it to the list
+        void ListOfHolidays(DateTime[] dates)
+        {
+            if (!dateTimes.Contains(dates[0]))
+                dateTimes.Add(dates[0]);   
+        }
+
         string DayOfTheWeek()
         {
+            DayOfWeek today = DateTime.Today.DayOfWeek;
             switch (today)
             {
                 case DayOfWeek.Monday:
@@ -177,6 +192,29 @@ namespace TimeTilTheEnd
             return timeLeft;
         }
 
+        public string WhatWeekWeAreIn()
+        {
+            CultureInfo culture1 = CultureInfo.CurrentCulture;
+           
+         
+            // Gets the Calendar instance associated with a CultureInfo.
+            CultureInfo myCI = new CultureInfo(culture1.Name);
+            Calendar myCal = myCI.Calendar;
+
+            // Gets the DTFI properties required by GetWeekOfYear.
+            CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+
+            //Console.WriteLine("The current week {0}.", myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW));
+
+            string calendarReturn = string.Format("The current week: {0}" +"\n\r"+
+                                                  "Day of the year: {1}" + "\n\r" +
+                                                  "What month we are in: {2}",
+                                                   myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW), DateTime.Now.DayOfYear, DateTime.Now.Month);
+
+            return calendarReturn;
+        }
+
         /// <summary>
         /// When we got break, message will apear
         /// </summary>
@@ -197,13 +235,14 @@ namespace TimeTilTheEnd
         /// <summary>
         /// Changes the holiday everyday second
         /// </summary>
-        int gg;
+        int changeHolidayDay;
         public int ChangeHoliday(int threadNumber)
         {
-            this.gg = threadNumber;
+            this.changeHolidayDay = threadNumber;
 
-            return gg;
+            return changeHolidayDay;
         }
+        #region HeadCounter, HolidayCounter
         /// <summary>
         /// Every holiday goes here, where it send it further to calculate the amount of days til next holiday
         /// and time from the last holiday
@@ -216,7 +255,10 @@ namespace TimeTilTheEnd
             DateTime[] paskeFerie = hoe.Holidaay(2019, 4, 15, 2019, 4, 23);
             DateTime[] sommerFerie = hoe.Holidaay(2019, 6, 29, 2019, 7, 11);
 
-            switch (gg) {
+
+            ListOfHolidays(paskeFerie);
+            ListOfHolidays(sommerFerie);
+            switch (changeHolidayDay) {
                 case 1:
                   holidayFound = HolidayCounter(paskeFerie,"Easter Holiday");
                     break;
@@ -236,8 +278,9 @@ namespace TimeTilTheEnd
         public string HeadQuarters()
         {
             DateTime[] headTwo = hoe.Holidaay(2020, 1, 13, 2020, 3, 20);
-
-            string a = HeadCounter(headTwo,"head2");
+            
+            
+            string a = HeadCounter(headTwo, "hovedforloeb 2");
             return a;
         }
         /// <summary>
@@ -246,7 +289,6 @@ namespace TimeTilTheEnd
         /// </summary>
         /// <param name="dayIndex"></param>
         /// <param name="nameOfHead"></param>
-        #region HeadCounter, HolidayCounter
         string HeadCounter(DateTime[] dayIndex, string nameOfHead)
         {
             string daysPrint = "";
@@ -289,5 +331,6 @@ namespace TimeTilTheEnd
         }
         #endregion
 
+        
     }
 }
