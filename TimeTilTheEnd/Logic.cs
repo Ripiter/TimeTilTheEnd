@@ -135,7 +135,7 @@ namespace TimeTilTheEnd
             else
             {
                 WeAreDoneWorking();
-                Thread.Sleep(6000);
+                Thread.Sleep(60000);
                 return "Home";
             }
         }

@@ -15,7 +15,19 @@ namespace TimeTilTheEnd
         int workingMinute = 2220;
         float inTotalBefore = 0f;
         float inTotalAfter = 0f;
-
+        
+        string whenStarted;
+        public string WhenStarted
+        {
+            get
+            {
+                return this.whenStarted;
+            }
+            set
+            {
+                this.whenStarted = value;
+            }
+        }
         public float InTotalBefore
         {
             get
@@ -45,14 +57,11 @@ namespace TimeTilTheEnd
         {
             string retPrice;
             
-                InTotalBefore += MoneyEarnedBeforeSkat();
-                InTotalAfter += MoneyEarnedAfterSkat();
-                retPrice = "Money Earned Per Minute ('since app started'): \r\nBefore skat: " + InTotalBefore + "\r\nAfter skat " + InTotalAfter;
+            InTotalBefore += MoneyEarnedBeforeSkat();
+            InTotalAfter += MoneyEarnedAfterSkat();
+            retPrice = "Money Earned Per Minute ('started "+ WhenStarted + "'): \r\nBefore skat: " + InTotalBefore + "\r\nAfter skat " + InTotalAfter;
            
-            
-            return retPrice;
-
-            
+            return retPrice; 
             ///Make it count up, calculate how much for a sec :D
             //return "Money Erned per hour before skat: " + MoneyEarnedBeforeSkat() + "\nMoney after skat " + MoneyEarnedAfterSkat();
         }

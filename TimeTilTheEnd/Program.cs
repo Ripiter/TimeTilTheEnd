@@ -20,6 +20,7 @@ namespace TimeTilTheEnd
 
         static void PrintSkat()
         {
+            skat.WhenStarted = DateTime.Now.ToString();
             while (true)
             {
                 skatPrint = skat.MoneyErnedToday();
