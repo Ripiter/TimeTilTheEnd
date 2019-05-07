@@ -16,7 +16,6 @@ namespace TimeTilTheEnd
         static Skat skat = new Skat();
 
         static string skatPrint;
-       // static string normalTimerPrint;
         static string whatWeekPrint;
 
         static void PrintSkat()
@@ -38,7 +37,7 @@ namespace TimeTilTheEnd
 
         static void Main(string[] args)
         {
-            int dayChange = 0;
+            byte dayChange = 0;
             #region Create file to write in
             try
             {
@@ -49,7 +48,6 @@ namespace TimeTilTheEnd
                 Console.WriteLine("File Not Created");
             }
             #endregion
-            //TODO: add more threads
             Thread thrSkat = new Thread(PrintSkat);
             Thread thrWeek = new Thread(PrintWhatWeek);
 
@@ -57,7 +55,7 @@ namespace TimeTilTheEnd
             thrSkat.Start();
             thrWeek.Start();
 
-             
+            string printF;
             while (true)
             {               
                 dayChange++;
@@ -69,14 +67,14 @@ namespace TimeTilTheEnd
                 //Console.WriteLine(skat.MoneyErnedToday());
 
                // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
-                string printF = timer.NormalTimer() + whatWeekPrint + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
+                printF = timer.NormalTimer() + whatWeekPrint + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
 
                 ///Dont know which is better
                 //Console.WriteLine(timer.NormalTimer());
                 Thread.Sleep(1000);
                 Console.Clear();
                 Console.WriteLine(printF);
-
+            
                
                 if (dayChange == timer.DateTimes.Count)
                     dayChange = 0;

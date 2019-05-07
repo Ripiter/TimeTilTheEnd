@@ -80,12 +80,20 @@ namespace TimeTilTheEnd
 
         void ReadingFromTxt()
         {
+            Skat skat = new Skat();
+            Program prog = new Program();
             using (StreamReader read = new StreamReader("C:/daysSurvived.txt"))
             {
                 //Reading from a txt file
                 //To read counter for days suffered
                 //In case program closes
                 readFromTxtdaysSurvived = int.Parse(read.ReadLine());
+               
+                //TO DO:
+                    //readFromTxtdaysSurvived = a[0];
+                    //skat.InTotalBefore = a[1];
+                    //skat.InTotalAfter = a[2];
+               
                 read.Close();
             }
         }
@@ -112,7 +120,7 @@ namespace TimeTilTheEnd
                                    "Hours left: " + g.Hours + "\n\r" +
                                    "Minuts left: " + g.Minutes + "\n\r" +
                                    "Seconds left: " + g.Seconds + "\n\r" +
-                                   "Days Survived: " + readFromTxtdaysSurvived + "\r";
+                                   "Days Survived: " + readFromTxtdaysSurvived + "\nr";
                     if (eating == true)
                         returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
                     

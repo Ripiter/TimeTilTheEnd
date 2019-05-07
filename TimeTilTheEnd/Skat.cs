@@ -16,13 +16,38 @@ namespace TimeTilTheEnd
         float inTotalBefore = 0f;
         float inTotalAfter = 0f;
 
+        public float InTotalBefore
+        {
+            get
+            {
+                return this.inTotalBefore;
+            }
+            set
+            {
+                this.inTotalBefore = value;
+            }
+        }
+        public float InTotalAfter
+        {
+            get
+            {
+                return this.inTotalAfter;
+            }
+            set
+            {
+                this.inTotalAfter = value;
+            }
+        }
+
+        //TO DO: get and set on in total
+        //read from txt 
         public string MoneyErnedToday()
         {
             string retPrice;
             
-                inTotalBefore += MoneyEarnedBeforeSkat();
-                inTotalAfter += MoneyEarnedAfterSkat();
-                retPrice = "Money Earned Per Minute ('since app started'): \r\nBefore skat: " + inTotalBefore + "\r\nAfter skat " + inTotalAfter;
+                InTotalBefore += MoneyEarnedBeforeSkat();
+                InTotalAfter += MoneyEarnedAfterSkat();
+                retPrice = "Money Earned Per Minute ('since app started'): \r\nBefore skat: " + InTotalBefore + "\r\nAfter skat " + InTotalAfter;
            
             
             return retPrice;
