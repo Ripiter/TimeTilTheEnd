@@ -8,15 +8,26 @@ namespace TimeTilTheEnd
 {
     class Skat
     {
-        #region Money earned per minute
+        Logic timer = new Logic();
 
+        #region Variables
         int moneyErnedInAYear = 91680;
         float proceftForSkat = 0.38f;
         int workingMinute = 2220;
         float inTotalBefore = 0f;
         float inTotalAfter = 0f;
-        
         string whenStarted;
+        bool workingHard;
+        #endregion
+
+        #region Properties
+        public bool WorkingHard
+        {
+            get
+            {
+                return this.workingHard;
+            }
+        }
         public string WhenStarted
         {
             get
@@ -50,9 +61,8 @@ namespace TimeTilTheEnd
                 this.inTotalAfter = value;
             }
         }
-
-        //TO DO: get and set on in total
-        //read from txt 
+        #endregion
+        //TO DO: Read from txt 
         public string MoneyErnedToday()
         {
             string retPrice;
@@ -83,6 +93,17 @@ namespace TimeTilTheEnd
             return moneyErnedPerHour;
         }
 
-        #endregion
+        //timer.DayOfTheWeek returned time we got free based on the day
+        public void WorkHours()
+        {
+            DateTime startWork = DateTime.Parse("08:00:00");
+            DateTime endWork = DateTime.Parse(timer.DayOfTheWeek());
+            TimeSpan work = endWork - DateTime.Now;
+
+            if(work.Seconds > -1 && DateTime.Now > startWork)
+                workingHard = true;
+            else
+                workingHard = false;
+        }
     }
 }

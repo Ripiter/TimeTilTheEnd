@@ -49,7 +49,6 @@ namespace TimeTilTheEnd
         }
         #endregion
 
-
         #region Txt Files
         public void FirstWrite()
         {
@@ -80,7 +79,6 @@ namespace TimeTilTheEnd
 
         void ReadingFromTxt()
         {
-            Skat skat = new Skat();
             Program prog = new Program();
             using (StreamReader read = new StreamReader("C:/daysSurvived.txt"))
             {
@@ -127,6 +125,7 @@ namespace TimeTilTheEnd
                     if (g.Seconds <= -1)
                     {
                         TheEndOfTime();
+                        WeAreDoneWorking();
                     }
                     return returnString;
                 }
@@ -134,8 +133,8 @@ namespace TimeTilTheEnd
             }
             else
             {
-                WeAreDoneWorking();
-                Thread.Sleep(60000);
+                Suffering = false;
+                Thread.Sleep(600);
                 return "Home";
             }
         }
@@ -160,7 +159,7 @@ namespace TimeTilTheEnd
                 dateTimes.Add(dates[0]);   
         }
 
-        string DayOfTheWeek()
+        public string DayOfTheWeek()
         {
             DayOfWeek today = DateTime.Today.DayOfWeek;
             switch (today)

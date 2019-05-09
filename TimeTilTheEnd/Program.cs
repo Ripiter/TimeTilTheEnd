@@ -21,7 +21,8 @@ namespace TimeTilTheEnd
         static void PrintSkat()
         {
             skat.WhenStarted = DateTime.Now.ToString();
-            while (true)
+            skat.WorkHours();
+            while(skat.WorkingHard == true)
             {
                 skatPrint = skat.MoneyErnedToday();
                 Thread.Sleep(60000);
@@ -57,8 +58,9 @@ namespace TimeTilTheEnd
             thrWeek.Start();
 
             string printF;
+            Console.WriteLine("Loading...");
             while (true)
-            {               
+            {
                 dayChange++;
                 timer.ChangeHoliday(dayChange);         //Changes holiday
                 //Console.WriteLine(timer.NormalTimer());     //Writes time til school end
@@ -69,13 +71,12 @@ namespace TimeTilTheEnd
 
                // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
                 printF = timer.NormalTimer() + whatWeekPrint + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
-
+               
                 ///Dont know which is better
                 //Console.WriteLine(timer.NormalTimer());
                 Thread.Sleep(1000);
                 Console.Clear();
-                Console.WriteLine(printF);
-            
+                Console.WriteLine(printF);            
                
                 if (dayChange == timer.DateTimes.Count)
                     dayChange = 0;
