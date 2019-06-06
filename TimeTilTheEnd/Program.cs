@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 
-
 namespace TimeTilTheEnd
 {
     class Program
@@ -11,7 +10,6 @@ namespace TimeTilTheEnd
 
         static string skatPrint;
         static string whatWeekPrint;
-        static int counterDays;
 
         static void PrintSkat()
         {
@@ -34,16 +32,7 @@ namespace TimeTilTheEnd
         static void Main(string[] args)
         {
             byte dayChange = 0;
-            #region Create file to write in
-            try
-            {
-                timer.FirstWrite();
-            }
-            catch(Exception)
-            {
-                Console.WriteLine("File Not Created");
-            }
-            #endregion
+           
             Thread thrSkat = new Thread(PrintSkat);
             Thread thrWeek = new Thread(PrintWhatWeek);
 
