@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using System.IO;
-using Microsoft.Win32;
 
 
 namespace TimeTilTheEnd
@@ -17,6 +11,7 @@ namespace TimeTilTheEnd
 
         static string skatPrint;
         static string whatWeekPrint;
+        static int counterDays;
 
         static void PrintSkat()
         {
@@ -36,7 +31,6 @@ namespace TimeTilTheEnd
                 whatWeekPrint = timer.WhatWeekWeAreIn();
             }
         }
-
         static void Main(string[] args)
         {
             byte dayChange = 0;
@@ -53,24 +47,18 @@ namespace TimeTilTheEnd
             Thread thrSkat = new Thread(PrintSkat);
             Thread thrWeek = new Thread(PrintWhatWeek);
 
-
             thrSkat.Start();
             thrWeek.Start();
 
-            string printF;
             Console.WriteLine("Loading...");
+            string printF;
             while (true)
             {
                 dayChange++;
-                timer.ChangeHoliday(dayChange);         //Changes holiday
-                //Console.WriteLine(timer.NormalTimer());     //Writes time til school end
-                //Console.WriteLine(timer.WhatWeekWeAreIn()); //Calendar for stuff
-                //Console.WriteLine(timer.HeadQuarters());    //Writes time til hovedforlob 
-                //Console.WriteLine(timer.HolidayFinder());   //Writes time til holiday
-                //Console.WriteLine(skat.MoneyErnedToday());
+                timer.ChangeHoliday(dayChange); //Changes holiday
 
                // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
-                printF = timer.NormalTimer() + whatWeekPrint + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
+                printF = timer.NormalTimer() + whatWeekPrint +"\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
                
                 ///Dont know which is better
                 //Console.WriteLine(timer.NormalTimer());

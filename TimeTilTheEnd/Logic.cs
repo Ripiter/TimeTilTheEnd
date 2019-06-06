@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
 using System.Globalization;
@@ -14,6 +11,9 @@ namespace TimeTilTheEnd
     {
         Holiday hoe = new Holiday();
         List<DateTime> dateTimes = new List<DateTime>();
+
+        TimeSpan daysSurviveTime;
+        DateTime startSchool = DateTime.Parse("04/08/2018");
 
 
         #region variables
@@ -65,36 +65,6 @@ namespace TimeTilTheEnd
             }
         }
 
-        void WritingToTxt(string _txtWrite)
-        {
-            //Write to txt file
-            //To write counter for days suffered
-            //In case program closes
-
-            ///Makes it dynamic
-            StreamWriter write = new StreamWriter("C:/daysSurvived.txt");
-            write.Write(_txtWrite);
-            write.Close();
-        }
-
-        void ReadingFromTxt()
-        {
-            Program prog = new Program();
-            using (StreamReader read = new StreamReader("C:/daysSurvived.txt"))
-            {
-                //Reading from a txt file
-                //To read counter for days suffered
-                //In case program closes
-                readFromTxtdaysSurvived = int.Parse(read.ReadLine());
-               
-                //TO DO:
-                    //readFromTxtdaysSurvived = a[0];
-                    //skat.InTotalBefore = a[1];
-                    //skat.InTotalAfter = a[2];
-               
-                read.Close();
-            }
-        }
         #endregion
 
         public string NormalTimer()
@@ -113,19 +83,20 @@ namespace TimeTilTheEnd
                 {
                    // string week = WhatWeekWeAreIn();
                     EatingTime();
-                    ReadingFromTxt();
                     returnString = g + "\n\r" +
                                    "Hours left: " + g.Hours + "\n\r" +
                                    "Minuts left: " + g.Minutes + "\n\r" +
                                    "Seconds left: " + g.Seconds + "\n\r" +
-                                   "Days Survived: " + readFromTxtdaysSurvived + "\nr";
+                                   "Days Survived: " + WeAreDoneWorking() + "\n";
                     if (eating == true)
-                        returnString = g + "\r Hours left: " + g.Hours + "\r minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
+                        returnString = g + "\r Hours left: " + g.Hours + "\r Minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
                     
                     if (g.Seconds <= -1)
                     {
+                        //Changes Suffering to false and
+                        //Adds a day to day survived
                         TheEndOfTime();
-                        WeAreDoneWorking();
+                       // WeAreDoneWorking();
                     }
                     return returnString;
                 }
@@ -143,22 +114,27 @@ namespace TimeTilTheEnd
         {
             Suffering = false;
         }
-
-        public void WeAreDoneWorking()
+        /// <summary>
+        /// From Timespan that we set return days from that date
+        /// </summary>
+        /// <returns></returns>
+        public int WeAreDoneWorking()
         {
-            //daysSurvived = printDaysSurvived;
-            writeToTxtDaysSurvived = readFromTxtdaysSurvived;
-            writeToTxtDaysSurvived++;
-            WritingToTxt(writeToTxtDaysSurvived.ToString());
+            daysSurviveTime = DateTime.Today - startSchool;
+            return daysSurviveTime.Days;
         }
 
         //Gets array, and adds it to the list
+        //List is used in rotating the holidays
         void ListOfHolidays(DateTime[] dates)
         {
             if (!dateTimes.Contains(dates[0]))
                 dateTimes.Add(dates[0]);   
         }
-
+        /// <summary>
+        /// Finds what day, and return time we are done
+        /// </summary>
+        /// <returns></returns>
         public string DayOfTheWeek()
         {
             DayOfWeek today = DateTime.Today.DayOfWeek;
@@ -329,7 +305,5 @@ namespace TimeTilTheEnd
             return holidayCounter;
         }
         #endregion
-
-        
     }
 }

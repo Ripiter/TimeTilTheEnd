@@ -13,7 +13,7 @@ namespace TimeTilTheEnd
         #region Variables
         int moneyErnedInAYear = 91680;
         float proceftForSkat = 0.38f;
-        int workingMinute = 2220;
+        int workingMinutePerDay = 480;
         float inTotalBefore = 0f;
         float inTotalAfter = 0f;
         string whenStarted;
@@ -72,8 +72,6 @@ namespace TimeTilTheEnd
             retPrice = "Money Earned Per Minute ('started "+ WhenStarted + "'): \r\nBefore skat: " + InTotalBefore + "\r\nAfter skat " + InTotalAfter;
            
             return retPrice; 
-            ///Make it count up, calculate how much for a sec :D
-            //return "Money Erned per hour before skat: " + MoneyEarnedBeforeSkat() + "\nMoney after skat " + MoneyEarnedAfterSkat();
         }
 
         float MoneyEarnedAfterSkat()
@@ -87,9 +85,11 @@ namespace TimeTilTheEnd
         float MoneyEarnedBeforeSkat()
         {
             float moneyPerDay = moneyErnedInAYear / 365;
-            int hoursWorkedPerWeek = workingMinute / 5;
+            float moneyperhour = moneyPerDay / 8;
+            float moneyPerMin = moneyperhour / 60;
+            int minutesWorkedPerday = workingMinutePerDay / 5;
 
-            float moneyErnedPerHour = moneyPerDay / hoursWorkedPerWeek;
+            float moneyErnedPerHour = moneyPerMin;
             return moneyErnedPerHour;
         }
 
