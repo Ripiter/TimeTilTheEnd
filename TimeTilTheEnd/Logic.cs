@@ -10,12 +10,10 @@ namespace TimeTilTheEnd
     {
         Holiday hoe = new Holiday();
         List<DateTime> dateTimes = new List<DateTime>();
-
+        
+        #region Variables
         TimeSpan daysSurviveTime;
         DateTime startSchool = DateTime.Parse("04/08/2018");
-
-
-        #region variables
         string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
@@ -65,8 +63,7 @@ namespace TimeTilTheEnd
                     returnString = g + "\n\r" +
                                    "Hours left: " + g.Hours + "\n\r" +
                                    "Minuts left: " + g.Minutes + "\n\r" +
-                                   "Seconds left: " + g.Seconds + "\n\r" +
-                                   "Days Survived: " + WeAreDoneWorking() + "\n";
+                                   "Seconds left: " + g.Seconds + "\n\r";
                     if (eating == true)
                         returnString = g + "\r Hours left: " + g.Hours + "\r Minuts left: " + g.Minutes + "\r seconds left: " + g.Seconds + "\r EAT!!! NOW!!! BREAK!!!";
                     

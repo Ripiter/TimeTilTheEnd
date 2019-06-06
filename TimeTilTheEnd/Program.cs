@@ -27,6 +27,7 @@ namespace TimeTilTheEnd
             while (true)
             {
                 whatWeekPrint = timer.WhatWeekWeAreIn();
+                Thread.Sleep(60000);
             }
         }
         static void Main(string[] args)
@@ -48,7 +49,7 @@ namespace TimeTilTheEnd
                 timer.ChangeHoliday(dayChange); //Changes holiday
 
                // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
-                printF = timer.NormalTimer() + whatWeekPrint +"\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
+                printF = timer.NormalTimer() + "Days survived: " + timer.WeAreDoneWorking() +"\n"+ whatWeekPrint +"\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
                
                 ///Dont know which is better
                 //Console.WriteLine(timer.NormalTimer());
