@@ -19,8 +19,6 @@ namespace TimeTilTheEnd
         string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
-        int readFromTxtdaysSurvived;
-        int writeToTxtDaysSurvived;
         #endregion
 
         #region Get Set
