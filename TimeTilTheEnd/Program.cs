@@ -32,7 +32,8 @@ namespace TimeTilTheEnd
         static void Main(string[] args)
         {
             byte dayChange = 0;
-           
+            Console.Title = "Timer that shows time";
+            Console.CursorVisible = false;
             Thread thrSkat = new Thread(PrintSkat);
             Thread thrWeek = new Thread(PrintWhatWeek);
 
