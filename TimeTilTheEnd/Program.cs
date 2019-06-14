@@ -7,9 +7,20 @@ namespace TimeTilTheEnd
     {
         static Logic timer = new Logic();
         static Skat skat = new Skat();
+        static WeatherTemperature weather = new WeatherTemperature();
 
         static string skatPrint;
         static string whatWeekPrint;
+        static string temperature;
+
+        static void FindTemperature()
+        {
+            while (true)
+            {
+                temperature = weather.Temperature();
+                Thread.Sleep(900000);
+            }
+        }
 
         static void PrintSkat()
         {
@@ -37,9 +48,11 @@ namespace TimeTilTheEnd
             Console.CursorVisible = false;
             Thread thrSkat = new Thread(PrintSkat);
             Thread thrWeek = new Thread(PrintWhatWeek);
+            Thread thrTemp = new Thread(FindTemperature);
 
             thrSkat.Start();
             thrWeek.Start();
+            thrTemp.Start();
 
             Console.WriteLine("Loading...");
             string printF;
@@ -49,8 +62,15 @@ namespace TimeTilTheEnd
                 timer.ChangeHoliday(dayChange); //Changes holiday
 
                // string a = timer.NormalTimer() + "\n" + timer.WhatWeekWeAreIn() + "\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skat.MoneyErnedToday();
-                printF = timer.NormalTimer() + "Days survived: " + timer.WeAreDoneWorking() +"\n"+ whatWeekPrint +"\n" + timer.HeadQuarters() + "\n" + timer.HolidayFinder() + "\n" + skatPrint;
-               
+                printF = timer.NormalTimer() +
+                         "Days survived: "        +
+                         timer.WeAreDoneWorking() +"\n"+
+                         whatWeekPrint            +"\n" +
+                         timer.HeadQuarters()     +"\n" +
+                         timer.HolidayFinder()    +"\n" +
+                         skatPrint                +"\n" +
+                         temperature;
+                
                 ///Dont know which is better
                 //Console.WriteLine(timer.NormalTimer());
                 Thread.Sleep(1000);
