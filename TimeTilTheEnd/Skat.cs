@@ -13,7 +13,6 @@ namespace TimeTilTheEnd
         #region Variables
         int moneyErnedInAYear = 91680;
         float proceftForSkat = 0.38f;
-        int workingMinutePerDay = 480;
         float inTotalBefore = 0f;
         float inTotalAfter = 0f;
         string whenStarted;
@@ -85,12 +84,10 @@ namespace TimeTilTheEnd
         float MoneyEarnedBeforeSkat()
         {
             float moneyPerDay = moneyErnedInAYear / 365;
-            float moneyperhour = moneyPerDay / 8;
-            float moneyPerMin = moneyperhour / 60;
-            int minutesWorkedPerday = workingMinutePerDay / 5;
-
-            float moneyErnedPerHour = moneyPerMin;
-            return moneyErnedPerHour;
+            float moneyPerHour = moneyPerDay / 8;
+            float moneyPerMinute = moneyPerHour / 60;
+           
+            return moneyPerMinute;
         }
 
         //timer.DayOfTheWeek returned time we got free based on the day

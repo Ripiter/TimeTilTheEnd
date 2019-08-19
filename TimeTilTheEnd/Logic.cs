@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Globalization;
 
-
 namespace TimeTilTheEnd
 {
     class Logic
@@ -13,13 +12,13 @@ namespace TimeTilTheEnd
         
         #region Variables
         TimeSpan daysSurviveTime;
-        DateTime startSchool = DateTime.Parse("04/08/2018");
+        DateTime startSchool = DateTime.Parse("01/08/2018");
         string timeLeft = "";
         bool eating = false;
         private bool suffering = true;
         #endregion
 
-        #region Get Set
+        #region Properties
         public List<DateTime> DateTimes
         {
             get
@@ -156,16 +155,22 @@ namespace TimeTilTheEnd
             CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
             DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
 
-            //Console.WriteLine("The current week {0}.", myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW));
+            
 
             string calendarReturn = string.Format("The current week: {0}" +"\n\r"+
                                                   "Day of the year: {1}" + "\n\r" +
-                                                  "What month we are in: {2}",
-                                                   myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW), DateTime.Now.DayOfYear, DateTime.Now.Month);
+                                                  "What month we are in: {2}" + "\n\r"+
+                                                  "Days to pay day: {3}",  myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW), DateTime.Now.DayOfYear, DateTime.Now.Month,DaysToPayDay());
 
             return calendarReturn;
         }
 
+        private string DaysToPayDay()
+        {
+            int lastDay = DateTime.DaysInMonth(DateTime.Now.Year,DateTime.Now.Month);
+            int timTillPayDay = lastDay - DateTime.Now.Day;
+            return timTillPayDay.ToString();
+        }
         /// <summary>
         /// When we got break, message will apear
         /// </summary>
@@ -205,16 +210,21 @@ namespace TimeTilTheEnd
             //first 3 numbers are made into 1 datetime and rest is made to check when it ends
             DateTime[] paskeFerie = hoe.Holidaay(2019, 4, 15, 2019, 4, 23);
             DateTime[] sommerFerie = hoe.Holidaay(2019, 6, 29, 2019, 7, 11);
-
-
+            DateTime[] efterFerie = hoe.Holidaay(2019, 10, 14, 2019, 10, 20);
+            
             ListOfHolidays(paskeFerie);
             ListOfHolidays(sommerFerie);
+            ListOfHolidays(efterFerie);
+
             switch (changeHolidayDay) {
                 case 1:
                   holidayFound = HolidayCounter(paskeFerie,"Easter Holiday");
                     break;
                 case 2:
                   holidayFound = HolidayCounter(sommerFerie,"Summer Holiday");
+                    break;
+                case 3:
+                    holidayFound = HolidayCounter(efterFerie, "Efter år Holiday");
                     break;
                 default:
                   holidayFound = "Yeet the error";
@@ -235,7 +245,7 @@ namespace TimeTilTheEnd
             return a;
         }
         /// <summary>
-        /// DateTime[] is the start date of the x,y and string nameOfHead is for the name of the thing
+        /// DateTime[] is the start date of the x,y and string nameOfHead is for the name of the event
         /// HeadCounter is made to calculate and print the amount of days to x,y event
         /// </summary>
         /// <param name="dayIndex"></param>
@@ -260,6 +270,15 @@ namespace TimeTilTheEnd
 
             return daysPrint;
         }
+
+        /// <summary>
+        /// First 3 numbers in array are start date
+        /// last 3 numbers are end date, and string 
+        /// is the name of the holiday
+        /// </summary>
+        /// <param name="dayIndex"></param>
+        /// <param name="nameOfHoliday"></param>
+        /// <returns></returns>
         string HolidayCounter(DateTime[] dayIndex, string nameOfHoliday)
         {
             string holidayCounter = "";
